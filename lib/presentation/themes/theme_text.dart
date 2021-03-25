@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:clean_code_architecture_flutter/presentation/themes/theme_colors.dart';
-
 class ThemeText {
   // Default Text Style Following Guideline
   static const headline1 = TextStyle(

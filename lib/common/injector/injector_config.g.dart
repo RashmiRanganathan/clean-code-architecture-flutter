@@ -38,7 +38,6 @@ class _$InjectorConfig extends InjectorConfig {
 
   void _configureCommon() {
     final KiwiContainer container = KiwiContainer();
-    container.registerSingleton((c) => HttpClient(
-        host: c<String>('https://api-nodejs-todolist.herokuapp.com/')));
+    container.registerSingleton((c) => HttpClient.setTodoAPIhost());
   }
 }
