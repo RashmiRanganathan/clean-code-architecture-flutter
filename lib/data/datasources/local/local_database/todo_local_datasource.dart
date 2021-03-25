@@ -1,11 +1,13 @@
-import 'package:clean_code_architecture_flutter/common/http/http_client.dart';
+import 'package:clean_code_architecture_flutter/common/constants/local_database_type_constants.dart';
 import 'package:clean_code_architecture_flutter/data/datasources/local/local_database/base_local_database.dart';
+import 'package:clean_code_architecture_flutter/data/datasources/local/local_database/tables/todo_table.dart';
+import 'package:clean_code_architecture_flutter/data/models/todo_model.dart';
 
-class TodoLocalDatasource extends BaseLocalDataSource {
-  TodoLocalDatasource();
+class TodoLocalDatasource extends BaseLocalDataSource<TodoTable, TodoModel> {
+  TodoLocalDatasource() : super(boxName: HiveTableNameConstants.todoTableName);
 
   @override
-  Future<List> getFormattedData() {
+  Future<List<TodoModel>> getFormattedData() {
     // TODO: implement getFormattedData
     throw UnimplementedError();
   }

@@ -20,8 +20,9 @@ class _$InjectorConfig extends InjectorConfig {
 
   void _configureRepositories() {
     final KiwiContainer container = KiwiContainer();
-    container.registerSingleton<TodoRespository>((c) =>
-        TodoRespositoryImpl(todoRemoteDatasource: c<TodoRemoteDatasource>()));
+    container.registerSingleton<TodoRespository>((c) => TodoRespositoryImpl(
+        todoRemoteDatasource: c<TodoRemoteDatasource>(),
+        todoLocalDatasource: c<TodoLocalDatasource>()));
   }
 
   void _configureRemoteDataSources() {

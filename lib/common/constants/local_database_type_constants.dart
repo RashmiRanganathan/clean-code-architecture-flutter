@@ -2,3 +2,7 @@
 class HiveTypeIdConstants {
   static const int customerTableId = 0;
 }
+
+class HiveTableNameConstants {
+  static const todoTableName = 'todo';
+}
