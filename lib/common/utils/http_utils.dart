@@ -29,7 +29,7 @@ class HttpUtil {
     switch (response.statusCode) {
       case 200:
         var responseJson = json.decode(response.body);
-        return responseJson;
+        return responseJson['data'];
       case 400:
         throw BadRequestException(
           getErroredResult(json.decode(response.body)),

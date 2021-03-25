@@ -6,7 +6,31 @@ part 'todo_table.g.dart';
 
 @HiveType(typeId: HiveTypeIdConstants.customerTableId)
 class TodoTable extends TodoModel {
-  TodoTable() : super();
+  @HiveField(1)
+  String id;
 
-  factory TodoTable.fromModel(TodoModel model) => TodoTable();
+  @HiveField(2)
+  String description;
+
+  @HiveField(3)
+  bool completed;
+
+  TodoTable({this.id, this.description, this.completed})
+      : super(
+          id: id,
+          description: description,
+          completed: completed,
+        );
+
+  factory TodoTable.fromModel(TodoModel model) => TodoTable(
+        id: model.id,
+        description: model.description,
+        completed: model.completed,
+      );
+
+  static TodoModel toModel(TodoTable table) => TodoModel(
+        id: table.id,
+        description: table.description,
+        completed: table.completed,
+      );
 }
