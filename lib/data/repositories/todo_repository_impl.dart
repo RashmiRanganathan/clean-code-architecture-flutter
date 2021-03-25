@@ -14,9 +14,9 @@ class TodoRespositoryImpl extends TodoRespository {
     this.todoLocalDatasource,
   });
 
-  Future<List<TodoModel>> getAll() async {
+  Future<List<TodoModel>> getAll({bool fromLocal}) async {
     List<TodoModel> todos = await todoLocalDatasource.getFormattedData();
-    if (todos.isEmpty) {
+    if (todos.isEmpty || !(fromLocal ?? true)) {
       todos = await todoRemoteDatasource.getAll();
       unawaited(todoLocalDatasource.insertOrUpdateAll(todos));
     }

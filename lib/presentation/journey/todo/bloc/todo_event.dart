@@ -3,7 +3,8 @@ import 'package:clean_code_architecture_flutter/domain/entities/todo_entity.dart
 abstract class TodoEvent {}
 
 class FetchTodos extends TodoEvent {
-  FetchTodos();
+  bool fromLocal;
+  FetchTodos({this.fromLocal});
 }
 
 class AddTodo extends TodoEvent {

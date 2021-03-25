@@ -18,7 +18,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   Stream<TodoState> mapEventToState(TodoEvent event) async* {
     switch (event.runtimeType) {
       case FetchTodos:
-        yield FetchedTodos(todos: await todousecase.getAll());
+        yield* _mapFetchTodoState(event);
         break;
       case AddTodo:
         yield* _mapAddTodoState(event);
@@ -33,7 +33,12 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     }
   }
 
-  Stream<TodoState> _mapAddTodoState(UpdateTodo event) async* {
+  Stream<TodoState> _mapFetchTodoState(FetchTodos event) async* {
+    final todos = await todousecase.getAll(fromLocal: event.fromLocal);
+    yield FetchedTodos(todos: todos);
+  }
+
+  Stream<TodoState> _mapAddTodoState(AddTodo event) async* {
     final updatedTodo = await todousecase.create(event.todo);
     final List<TodoEntity> todos = this.state.todos;
     todos.add(updatedTodo);
@@ -50,10 +55,10 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     yield FetchedTodos(todos: todos);
   }
 
-  Stream<TodoState> _mapDeleteTodoState(UpdateTodo event) async* {
-    final updatedTodo = await todousecase.update(event.todo);
+  Stream<TodoState> _mapDeleteTodoState(DeleteTodo event) async* {
+    await todousecase.delete(event.id);
     final List<TodoEntity> todos = this.state.todos;
-    todos.removeWhere((TodoEntity todo) => todo.id == updatedTodo.id);
+    todos.removeWhere((TodoEntity todo) => todo.id == event.id);
 
     yield FetchedTodos(todos: todos);
   }

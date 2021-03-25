@@ -7,14 +7,14 @@ class TodoRemoteDatasource {
   TodoRemoteDatasource({this.httpClient});
 
   Future<List<TodoModel>> getAll() async {
-    final List<Map<String, dynamic>> data =
-        await httpClient.get(TodoEndpoints.getPath);
+    final List<dynamic> data =
+        await httpClient.get(TodoEndpoints.getCreateUpdateDeletePath);
     return TodoModel.fromJsonList(data);
   }
 
   Future<TodoModel> create(TodoModel todo) async {
     final Map<String, dynamic> data = await httpClient.post(
-      TodoEndpoints.createUpdateDeletePath,
+      TodoEndpoints.getCreateUpdateDeletePath,
       todo.toJson(),
     );
     return TodoModel.fromJson(data);
@@ -22,7 +22,7 @@ class TodoRemoteDatasource {
 
   Future<TodoModel> update(TodoModel todo) async {
     final Map<String, dynamic> data = await httpClient.put(
-      '${TodoEndpoints.createUpdateDeletePath}/${todo.id}',
+      '${TodoEndpoints.getCreateUpdateDeletePath}/${todo.id}',
       todo.toJson(),
     );
     return TodoModel.fromJson(data);
@@ -30,7 +30,7 @@ class TodoRemoteDatasource {
 
   Future<TodoModel> delete(String id) async {
     final Map<String, dynamic> data = await httpClient.delete(
-      '${TodoEndpoints.createUpdateDeletePath}/$id',
+      '${TodoEndpoints.getCreateUpdateDeletePath}/$id',
     );
     return TodoModel.fromJson(data);
   }

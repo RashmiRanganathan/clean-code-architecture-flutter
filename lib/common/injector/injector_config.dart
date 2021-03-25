@@ -1,6 +1,5 @@
 import 'package:kiwi/kiwi.dart';
 
-import 'package:clean_code_architecture_flutter/common/configs/configuration.dart';
 import 'package:clean_code_architecture_flutter/common/http/http_client.dart';
 import 'package:clean_code_architecture_flutter/data/datasources/local/local_database/todo_local_datasource.dart';
 import 'package:clean_code_architecture_flutter/data/datasources/remote/todo_remote_datasource.dart';
@@ -52,6 +51,6 @@ abstract class InjectorConfig {
   void _configureLocalDataSources();
 
   // ============ COMMON ============
-  @Register.singleton(HttpClient, resolvers: {String: Configuration.host})
+  @Register.singleton(HttpClient, constructorName: 'setTodoAPIhost')
   void _configureCommon();
 }
