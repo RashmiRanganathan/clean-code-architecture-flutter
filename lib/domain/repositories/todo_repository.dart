@@ -5,4 +5,6 @@ abstract class TodoRespository {
   Future<void> createTodo(TodoModel model);
 
   Future<List<TodoModel>> getTodo();
+
+  Future<void> deleteTodo(TodoModel model);
 }

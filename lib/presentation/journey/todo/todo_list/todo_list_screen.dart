@@ -27,6 +27,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
   @override
   void dispose() {
     super.dispose();
+    todoBloc?.close();
   }
 
   @override
@@ -50,6 +51,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                 itemBuilder: (context, index) {
                   return TodoItem(
                     todo: state.todos[index],
+                    todoBloc: todoBloc,
                   );
                 },
                 itemCount: state.todos.length,

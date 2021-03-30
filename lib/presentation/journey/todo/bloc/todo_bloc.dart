@@ -23,6 +23,9 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       case GetTodoEvent:
         yield* _mapGetTodoEventToState(event);
         break;
+      case DeleteTodoEvent:
+        yield* _mapDeleteTodoEventToState(event);
+        break;
     }
   }
 
@@ -37,6 +40,14 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
 
   Stream<TodoState> _mapGetTodoEventToState(GetTodoEvent event) async* {
     List<TodoEntity> todos = await todousecase.getTodo();
+    yield GetTodoSuccessState(todos);
+  }
+
+  Stream<TodoState> _mapDeleteTodoEventToState(DeleteTodoEvent event) async* {
+    await todousecase.delete(TodoModel(description: event.entity.description));
+    List<TodoEntity> todos = await todousecase.getTodo();
+    print(todos);
+
     yield GetTodoSuccessState(todos);
   }
 }

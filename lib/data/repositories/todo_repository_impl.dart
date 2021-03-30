@@ -24,4 +24,9 @@ class TodoRespositoryImpl extends TodoRespository {
   Future<List<TodoModel>> getTodo() {
     return todoLocalDatasource.getAll();
   }
+
+  @override
+  Future<void> deleteTodo(TodoModel model) {
+    return todoLocalDatasource.delete(model.description);
+  }
 }

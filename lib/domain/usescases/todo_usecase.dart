@@ -17,4 +17,8 @@ class Todousecase {
 
     return data.map((model) => model.toEntity()).toList();
   }
+
+  Future<void> delete(TodoModel model) {
+    return todoRespository.deleteTodo(model);
+  }
 }

@@ -9,3 +9,8 @@ class AddTodoEvent extends TodoEvent {
 }
 
 class GetTodoEvent extends TodoEvent {}
+
+class DeleteTodoEvent extends TodoEvent {
+  TodoEntity entity;
+  DeleteTodoEvent({this.entity});
+}
