@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../common/injector/injector.dart';
 import '../../../../domain/entities/todo_entity.dart';
 import '../bloc/todo_bloc.dart';
+import '../bloc/todo_event.dart';
 
 class CreateTodoScreen extends StatefulWidget {
   CreateTodoScreen({
@@ -51,6 +52,7 @@ class _CreateTodoScreenState extends State<CreateTodoScreen> {
                   final TodoEntity todo = TodoEntity(
                     description: _descriptionController.text,
                   );
+                  _bloc.add(AddTodoEvent(entity: todo));
                 },
                 child: const Text('Create'),
               )

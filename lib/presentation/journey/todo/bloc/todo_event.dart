@@ -1,7 +1,9 @@
+import '../../../../domain/entities/todo_entity.dart';
+
 abstract class TodoEvent {}
 
 class AddTodoEvent extends TodoEvent {
-  String description;
+  TodoEntity entity;
 
-  AddTodoEvent({this.description});
+  AddTodoEvent({this.entity});
 }

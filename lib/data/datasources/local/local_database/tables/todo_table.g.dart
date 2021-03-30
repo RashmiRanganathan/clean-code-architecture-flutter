@@ -16,12 +16,17 @@ class TodoTableAdapter extends TypeAdapter<TodoTable> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return TodoTable();
+    return TodoTable(
+      description: fields[1] as String,
+    );
   }
 
   @override
   void write(BinaryWriter writer, TodoTable obj) {
-    writer..writeByte(0);
+    writer
+      ..writeByte(1)
+      ..writeByte(1)
+      ..write(obj.description);
   }
 
   @override
