@@ -12,9 +12,9 @@ class Todousecase {
     return todoRespository.createTodo(model);
   }
 
-  Future<List<TodoEntity>> getTodo() async{
+  Future<List<TodoEntity>> getTodo() async {
     final data = await todoRespository.getTodo();
-    
-    return data.map((model)=> model.toEntity()).toList();
+
+    return data.map((model) => model.toEntity()).toList();
   }
 }

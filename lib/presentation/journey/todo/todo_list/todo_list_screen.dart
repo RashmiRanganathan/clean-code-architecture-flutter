@@ -21,8 +21,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
   @override
   void initState() {
     super.initState();
-    todoBloc = Injector.resolve<TodoBloc>()
-      ..add(GetTodoEvent());
+    todoBloc = Injector.resolve<TodoBloc>()..add(GetTodoEvent());
   }
 
   @override
@@ -50,7 +49,9 @@ class _TodoListScreenState extends State<TodoListScreen> {
               ),
               body: ListView.builder(
                 itemBuilder: (context, index) {
-                  return TodoItem(todo: state.todos[index],);
+                  return TodoItem(
+                    todo: state.todos[index],
+                  );
                 },
                 itemCount: state.todos.length,
               ),

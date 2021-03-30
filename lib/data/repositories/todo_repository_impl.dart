@@ -1,6 +1,5 @@
 import 'package:clean_code_architecture_flutter/data/datasources/local/local_database/todo_local_datasource.dart';
 import 'package:clean_code_architecture_flutter/data/datasources/remote/todo_remote_datasource.dart';
-import 'package:clean_code_architecture_flutter/domain/entities/todo_entity.dart';
 import 'package:clean_code_architecture_flutter/domain/repositories/todo_repository.dart';
 
 import '../datasources/local/local_database/tables/todo_table.dart';
@@ -25,6 +24,4 @@ class TodoRespositoryImpl extends TodoRespository {
   Future<List<TodoModel>> getTodo() {
     return todoLocalDatasource.getFormattedData();
   }
-
-  
 }
