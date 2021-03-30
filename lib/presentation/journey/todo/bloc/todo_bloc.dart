@@ -14,18 +14,31 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
 
   @override
   Stream<TodoState> mapEventToState(TodoEvent event) async* {
-    if(event is UpdateTodo){
-      yield* updateMapEventToState(event.todoModel);
+    if (event is DeleteTodo) {
+      yield* _mapDeleteTodoToState(event);
+    }else if(event is UpdateTodo){
+      yield* _mapUpdateToState(event);
+    }
+  }
+
+  Stream<TodoState> _mapDeleteTodoToState(DeleteTodo event) async* {
+    yield DeleteTodoLoading();
+    try {
+      await todousecase.deleteTodoById(id: event.id);
+    } catch (e) {
+      print(e);
+      yield DeleteTodoError();
     }
   }
 
   @override
   TodoState get initialState => TodoInitial();
 
-  Stream<UpdateTodoSuccess> updateMapEventToState(event) async* {
-    final result = await todousecase.update(todoEntity: event);
-    if(result.isNotEmpty){
-      yield UpdateTodoSuccess();
+  Stream<TodoState> _mapUpdateToState(UpdateTodo event) async* {
+    try {
+    await todousecase.update(todoEntity: event.todo);
+    yield UpdateTodoSuccess();
+    } catch (e) {
     }
   }
 
