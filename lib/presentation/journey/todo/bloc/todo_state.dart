@@ -4,8 +4,4 @@ abstract class TodoState {}
 
 class TodoInitial extends TodoState {}
 
-class CreateTodoSuccessfulState extends TodoState {
-  final TodoModel todo;
-
-  CreateTodoSuccessfulState({this.todo});
-}
+class CreateTodoSuccessfulState extends TodoState {}

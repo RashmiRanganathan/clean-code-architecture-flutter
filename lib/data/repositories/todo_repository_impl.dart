@@ -15,6 +15,6 @@ class TodoRespositoryImpl extends TodoRespository {
 
   @override
   Future<void> createTodo(TodoModel model) {
-    throw UnimplementedError();
+    return todoLocalDatasource.put(model.description, model);
   }
 }

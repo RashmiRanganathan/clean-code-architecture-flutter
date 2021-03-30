@@ -26,6 +26,6 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
 
   Stream<TodoState> _mapAddTodoEvent(AddTodoEvent event) async* {
     await todousecase.createTodo(event.entity);
-    yield CreateTodoSuccessfulState(todo: null);
+    yield CreateTodoSuccessfulState();
   }
 }
