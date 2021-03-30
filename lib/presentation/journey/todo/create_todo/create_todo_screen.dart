@@ -10,6 +10,9 @@ class CreateTodoScreen extends StatefulWidget {
 }
 
 class _CreateTodoScreenState extends State<CreateTodoScreen> {
+
+  String todoValue = '';
+
   @override
   void initState() {
     super.initState();
@@ -20,14 +23,40 @@ class _CreateTodoScreenState extends State<CreateTodoScreen> {
     super.dispose();
   }
 
+  void onTextChange(value) {
+    setState(() {
+      todoValue = value;
+    });
+  }
+
+ void onPressedToDo() {
+   print(todoValue);
+   Navigator.pop(context, todoValue);
+  }
+
   @override
   Widget build(BuildContext buildContext) => Scaffold(
         appBar: AppBar(
           title: Text('Create Todo'),
           centerTitle: true,
         ),
-        body: Center(
-          child: Text('CODE !'),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              TextField(
+                onChanged: onTextChange,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(), hintText: 'Enter the todo'),
+              ),
+              ElevatedButton(
+                child: Text('Add todo'),
+                onPressed: todoValue.length > 0 ? () => onPressedToDo() : null,
+              )
+            ],
+          ),
         ),
       );
 }
