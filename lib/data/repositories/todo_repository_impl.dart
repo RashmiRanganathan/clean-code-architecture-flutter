@@ -26,8 +26,7 @@ class TodoRespositoryImpl extends TodoRespository {
    Future<void> update({String id}) async {
     try {
       Map<String, dynamic> payload = {'completed': true};
-      print('REPO: $id dan $payload');
-      // await todoRemoteDatasource.updateTodoById(id, payload);
+      await todoRemoteDatasource.updateTodoById(id, payload);
     } catch (e) {
       throw Exception('Failed to update data');
     }
