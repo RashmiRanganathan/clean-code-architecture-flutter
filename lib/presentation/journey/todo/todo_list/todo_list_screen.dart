@@ -3,6 +3,7 @@ import 'package:clean_code_architecture_flutter/common/injector/injector.dart';
 import 'package:clean_code_architecture_flutter/presentation/journey/todo/bloc/todo_bloc.dart';
 import 'package:clean_code_architecture_flutter/presentation/journey/todo/bloc/todo_event.dart';
 import 'package:clean_code_architecture_flutter/presentation/journey/todo/bloc/todo_state.dart';
+import 'package:clean_code_architecture_flutter/presentation/journey/todo/todo_list/widgets/todo_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,6 +17,7 @@ class TodoListScreen extends StatefulWidget {
 }
 
 class _TodoListScreenState extends State<TodoListScreen> {
+  // ignore: close_sinks
   TodoBloc _todoBloc;
   @override
   void initState() {
@@ -24,15 +26,10 @@ class _TodoListScreenState extends State<TodoListScreen> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-    _todoBloc?.close();
-  }
-
-  @override
   Widget build(BuildContext buildContext) => BlocProvider(
         create: (BuildContext context) => _todoBloc,
         child: Scaffold(
+          key: const ValueKey('list_screen_key'),
           appBar: AppBar(
             title: Text('TODOS'),
             centerTitle: true,
@@ -45,7 +42,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
             ],
           ),
           body: Center(
-            child: BlocConsumer<TodoBloc, TodoState>(
+            child: BlocBuilder<TodoBloc, TodoState>(
               bloc: _todoBloc,
               builder: (BuildContext context, state) {
                 switch (state.runtimeType) {
@@ -55,34 +52,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
                     );
                     break;
                   case TodoFetchState:
-                    return ListView.builder(
-                      itemCount: state.todos.data.length,
-                      itemBuilder: (context, index) {
-                        return Card(
-                          elevation: 5,
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            height: 50,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Flexible(
-                                  child: Text(
-                                    '${index + 1}. ${state.todos.data[index].description}',
-                                  ),
-                                ),
-                                Flexible(
-                                  child: Text(
-                                      state.todos.data[index]?.completed ??
-                                              false
-                                          ? 'DONE'
-                                          : 'IN PROGRESS'),
-                                )
-                              ],
-                            ),
-                          ),
-                        );
-                      },
+                    return TodoListWidget(
+                      state: state,
                     );
                     break;
                   default:
@@ -96,7 +67,6 @@ class _TodoListScreenState extends State<TodoListScreen> {
                     );
                 }
               },
-              listener: (BuildContext context, state) {},
             ),
           ),
         ),
