@@ -40,7 +40,7 @@ class _TodoCardState extends State<TodoCard> {
                   child: _click
                       ? Icon(
                           Icons.check_circle_rounded,
-                          color: Colors.redAccent,
+                          color: Colors.grey,
                         )
                       : Icon(
                           Icons.check_circle_outline_rounded,
