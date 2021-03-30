@@ -1,6 +1,10 @@
 import 'package:clean_code_architecture_flutter/common/constants/route_constants.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../domain/entities/todo_entity.dart';
+import '../../../../domain/entities/todo_entity.dart';
+import 'widgets/todo_item.dart';
+
 class TodoListScreen extends StatefulWidget {
   TodoListScreen({
     Key key,
@@ -11,6 +15,29 @@ class TodoListScreen extends StatefulWidget {
 }
 
 class _TodoListScreenState extends State<TodoListScreen> {
+  List<TodoEntity> dummyTodos = [
+    TodoEntity(
+        completed: true,
+        createdAt: DateTime.now(),
+        description: 'Coding',
+        id: '1',
+        owner: '1001',
+        updatedAt: DateTime.now()),
+    TodoEntity(
+        completed: false,
+        createdAt: DateTime.now(),
+        description: 'Testing',
+        id: '2',
+        owner: '1001',
+        updatedAt: DateTime.now()),
+    TodoEntity(
+        completed: false,
+        createdAt: DateTime.now(),
+        description: 'Repeat',
+        id: '3',
+        owner: '1001',
+        updatedAt: DateTime.now()),
+  ];
   @override
   void initState() {
     super.initState();
@@ -34,8 +61,34 @@ class _TodoListScreenState extends State<TodoListScreen> {
             )
           ],
         ),
-        body: Center(
-          child: Text('CODE !'),
+        body: RefreshIndicator(
+          onRefresh: () async {
+            //do get
+            print('do get');
+          },
+          child: Center(
+            child: ListView.separated(
+              itemCount: dummyTodos.length,
+              itemBuilder: (context, index) {
+                return TodoListTile(
+                  todoEntity: dummyTodos[index],
+                  onConfirmed: (String id) {
+                    //do update
+                    print('update $id');
+                  },
+                  onDismissed: (String id) {
+                    //do delete
+                    print('delete $id');
+                  },
+                );
+              },
+              separatorBuilder: (context, index) {
+                return Divider(
+                  height: 2,
+                );
+              },
+            ),
+          ),
         ),
       );
 }
