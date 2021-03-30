@@ -21,7 +21,7 @@ class _TodoItemState extends State<TodoItem> {
           child: ListTile(
             title: Text(widget.todo.description,
                 style: TextStyle(
-                    decoration: true
+                    decoration: widget.todo.completed
                         ? TextDecoration.lineThrough
                         : null)),
           ),

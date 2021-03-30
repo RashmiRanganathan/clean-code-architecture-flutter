@@ -50,7 +50,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
               ),
               body: ListView.builder(
                 itemBuilder: (context, index) {
-                  return TodoItem(todo: state.todos[index],);
+                  return TodoItem(todo: state.todos[index]);
                 },
                 itemCount: state.todos.length,
               ),
