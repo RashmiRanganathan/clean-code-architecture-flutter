@@ -8,7 +8,7 @@ class TodoLocalDatasource extends BaseLocalDataSource<TodoTable, TodoModel> {
 
   @override
   Future<List<TodoModel>> getFormattedData() async {
-    List<TodoModel> todos = [TodoModel(description: 'Todo1'), TodoModel(description: 'Todo1')];
+    List<TodoModel> todos = [TodoModel(description: 'Todo1'), TodoModel(description: 'Todo1', completed: true)];
     return todos;
   }
 }
