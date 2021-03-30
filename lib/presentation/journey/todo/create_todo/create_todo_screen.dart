@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../../common/injector/injector.dart';
 import '../../../../domain/entities/todo_entity.dart';
+import '../bloc/todo_bloc.dart';
 
 class CreateTodoScreen extends StatefulWidget {
   CreateTodoScreen({
@@ -12,16 +14,18 @@ class CreateTodoScreen extends StatefulWidget {
 }
 
 class _CreateTodoScreenState extends State<CreateTodoScreen> {
-  var descriptionController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
+  TodoBloc _bloc;
 
   @override
   void initState() {
     super.initState();
+    _bloc = Injector.resolve<TodoBloc>();
   }
 
   @override
   void dispose() {
-    descriptionController.dispose();
+    _descriptionController.dispose();
     super.dispose();
   }
 
@@ -37,7 +41,7 @@ class _CreateTodoScreenState extends State<CreateTodoScreen> {
               SizedBox(
                 width: 200,
                 child: TextField(
-                  controller: descriptionController,
+                  controller: _descriptionController,
                   decoration: const InputDecoration(labelText: 'Description'),
                 ),
               ),
@@ -45,7 +49,7 @@ class _CreateTodoScreenState extends State<CreateTodoScreen> {
               ElevatedButton(
                 onPressed: () {
                   final TodoEntity todo = TodoEntity(
-                    description: descriptionController.text,
+                    description: _descriptionController.text,
                   );
                 },
                 child: const Text('Create'),
