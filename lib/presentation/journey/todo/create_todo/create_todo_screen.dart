@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../common/constants/route_constants.dart';
 import '../../../../common/injector/injector.dart';
 import '../../../../domain/entities/todo_entity.dart';
 import '../bloc/todo_bloc.dart';
@@ -53,6 +54,7 @@ class _CreateTodoScreenState extends State<CreateTodoScreen> {
                     description: _descriptionController.text,
                   );
                   _bloc.add(AddTodoEvent(entity: todo));
+                  Navigator.of(context).pushNamed(RouteList.todoList);
                 },
                 child: const Text('Create'),
               )
