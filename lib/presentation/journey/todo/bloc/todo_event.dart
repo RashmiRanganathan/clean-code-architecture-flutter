@@ -11,3 +11,5 @@ class UpdateTodo extends TodoEvent{
   UpdateTodo(this.todo);
   
 }
+
+class TodoFetchEvent extends TodoEvent {}

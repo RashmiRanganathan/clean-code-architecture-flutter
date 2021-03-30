@@ -1,13 +1,11 @@
 import 'package:clean_code_architecture_flutter/common/constants/route_constants.dart';
+import 'package:clean_code_architecture_flutter/common/injector/injector.dart';
+import 'package:clean_code_architecture_flutter/presentation/journey/todo/bloc/todo_bloc.dart';
+import 'package:clean_code_architecture_flutter/presentation/journey/todo/bloc/todo_event.dart';
+import 'package:clean_code_architecture_flutter/presentation/journey/todo/bloc/todo_state.dart';
+import 'package:clean_code_architecture_flutter/presentation/journey/todo/todo_list/widgets/todo_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../common/injector/injector.dart';
-import '../../../../domain/entities/todo_entity.dart';
-import '../bloc/todo_bloc.dart';
-import '../bloc/todo_event.dart';
-import '../bloc/todo_state.dart';
-import 'widgets/todo_item.dart';
 
 class TodoListScreen extends StatefulWidget {
   TodoListScreen({
@@ -19,95 +17,58 @@ class TodoListScreen extends StatefulWidget {
 }
 
 class _TodoListScreenState extends State<TodoListScreen> {
-  List<TodoEntity> dummyTodos = [
-    TodoEntity(
-        completed: true,
-        createdAt: DateTime.now(),
-        description: 'Coding',
-        id: '1',
-        owner: '1001',
-        updatedAt: DateTime.now()),
-    TodoEntity(
-        completed: false,
-        createdAt: DateTime.now(),
-        description: 'Testing',
-        id: '2',
-        owner: '1001',
-        updatedAt: DateTime.now()),
-    TodoEntity(
-        completed: false,
-        createdAt: DateTime.now(),
-        description: 'Repeat',
-        id: '3',
-        owner: '1001',
-        updatedAt: DateTime.now()),
-  ];
-
-  TodoBloc todoBLoc;
+  // ignore: close_sinks
+  TodoBloc _todoBloc;
   @override
   void initState() {
-    todoBLoc = Injector.resolve<TodoBloc>();
     // add get todo
     super.initState();
+    _todoBloc = Injector.resolve<TodoBloc>()..add(TodoFetchEvent());
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext buildContext) => Scaffold(
-        appBar: AppBar(
-          title: Text('TODOS'),
-          centerTitle: true,
-          actions: [
-            IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () =>
-                  Navigator.of(context).pushNamed(RouteList.createTodo),
-            )
-          ],
-        ),
-        body: RefreshIndicator(
-          onRefresh: () async {
-            //do get
-            print('do get');
-          },
-          child: BlocConsumer<TodoBloc, TodoState>(
-            listener: (context, state) {
-              if (state is DeleteTodoSuccess) {}
-            },
-            builder: (context, state) {
-              return Center(
-                child: ListView.separated(
-                  itemCount: dummyTodos.length,
-                  itemBuilder: (context, index) {
-                    return TodoListTile(
-                      todoEntity: dummyTodos[index],
-                      onConfirmed: (String id) {
-                        //do update
-                        print('update $id');
-                        todoBLoc.add(UpdateTodo(dummyTodos[index]));
-                      },
-                      onDismissed: (String id) {
-                        //do delete
-                        dummyTodos.removeWhere(
-                            (TodoEntity element) => element.id == id);
-                        print(dummyTodos);
-                        todoBLoc.add(DeleteTodo(id));
-                        print('delete $id');
+  Widget build(BuildContext buildContext) => BlocProvider(
+        create: (BuildContext context) => _todoBloc,
+        child: Scaffold(
+          key: const ValueKey('list_screen_key'),
+          appBar: AppBar(
+            title: Text('TODOS'),
+            centerTitle: true,
+            actions: [
+              IconButton(
+                icon: Icon(Icons.add),
+                onPressed: () =>
+                    Navigator.of(context).pushNamed(RouteList.createTodo),
+              )
+            ],
+          ),
+          body: Center(
+            child: BlocBuilder<TodoBloc, TodoState>(
+              bloc: _todoBloc,
+              builder: (BuildContext context, state) {
+                switch (state.runtimeType) {
+                  case TodoLoadingState:
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                    break;
+                  case TodoFetchState:
+                    return TodoListWidget(
+                      state: state,
+                    );
+                    break;
+                  default:
+                    return ListView.builder(
+                      itemCount: 1,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          child: Text('null'),
+                        );
                       },
                     );
-                  },
-                  separatorBuilder: (context, index) {
-                    return Divider(
-                      height: 2,
-                    );
-                  },
-                ),
-              );
-            },
+                }
+              },
+            ),
           ),
         ),
       );

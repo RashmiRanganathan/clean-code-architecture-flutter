@@ -1,3 +1,4 @@
+import 'package:clean_code_architecture_flutter/data/models/todos_model.dart';
 import 'package:clean_code_architecture_flutter/domain/usescases/todo_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,6 +20,11 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     }else if(event is UpdateTodo){
       yield* _mapUpdateToState(event);
     }
+     switch (event.runtimeType) {
+      case TodoFetchEvent:
+        yield* _mapTodoFetchEventToState(event);
+        break;
+    }
   }
 
   Stream<TodoState> _mapDeleteTodoToState(DeleteTodo event) async* {
@@ -37,9 +43,21 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   Stream<TodoState> _mapUpdateToState(UpdateTodo event) async* {
     try {
     await todousecase.update(todoEntity: event.todo);
-    yield UpdateTodoSuccess();
+     yield UpdateTodoSuccess();
     } catch (e) {
+      yield TodoErrorState();
     }
   }
 
+  Stream<TodoState> _mapTodoFetchEventToState(
+    TodoFetchEvent event,
+  ) async* {
+    yield TodoLoadingState();
+    try {
+      Todos data = await todousecase.getTodos();
+      yield TodoFetchState(todos: data);
+    } catch (e) {
+      yield TodoErrorState();
+    }
+  }
 }

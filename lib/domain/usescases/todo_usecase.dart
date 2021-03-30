@@ -1,3 +1,4 @@
+import 'package:clean_code_architecture_flutter/data/models/todos_model.dart';
 import 'package:clean_code_architecture_flutter/domain/repositories/todo_repository.dart';
 
 import '../../data/models/todo_model.dart';
@@ -16,4 +17,6 @@ class Todousecase {
     TodoModel model = todoEntity.todoModel();
     return todoRespository.update(model);
   }
+  
+  Future<Todos> getTodos() => todoRespository.getTodos();
 }

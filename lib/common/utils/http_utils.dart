@@ -30,7 +30,7 @@ class HttpUtil {
       case 200:
       case 201:
         final responseJson = json.decode(response.body);
-        return responseJson['data'];
+        return responseJson;
       case 400:
         throw BadRequestException(
           getErroredResult(json.decode(response.body)),
