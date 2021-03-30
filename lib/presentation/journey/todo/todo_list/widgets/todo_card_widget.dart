@@ -1,27 +1,66 @@
 import 'package:flutter/material.dart';
 
-class TodoCard extends StatelessWidget {
-  final Text text1;
-  final Text text2;
+class TodoCard extends StatefulWidget {
+  final String text;
 
-  const TodoCard({Key key, this.text1, this.text2}) : super(key: key);
+  const TodoCard({
+    Key key,
+    this.text,
+  }) : super(key: key);
+
+  @override
+  _TodoCardState createState() => _TodoCardState();
+}
+
+class _TodoCardState extends State<TodoCard> {
+  bool _click;
+  @override
+  void initState() {
+    super.initState();
+    _click = false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      child: Container(
-        padding: EdgeInsets.all(10),
-        height: 50,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Flexible(
-              child: text1,
-            ),
-            Flexible(child: text2)
-          ],
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.all(10),
+          height: 50,
+          child: Row(
+            children: [
+              SizedBox(width: 10),
+              Flexible(
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _click = !_click;
+                    });
+                  },
+                  child: _click
+                      ? Icon(
+                          Icons.check_circle_rounded,
+                          color: Colors.redAccent,
+                        )
+                      : Icon(
+                          Icons.check_circle_outline_rounded,
+                        ),
+                ),
+              ),
+              SizedBox(width: 30),
+              Flexible(
+                  child: Text(
+                widget.text,
+                style: TextStyle(
+                    decoration: _click
+                        ? TextDecoration.lineThrough
+                        : TextDecoration.none),
+              )),
+            ],
+          ),
         ),
-      ),
+        Divider()
+      ],
     );
   }
 }
