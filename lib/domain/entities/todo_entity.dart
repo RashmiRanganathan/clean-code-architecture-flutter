@@ -1,4 +1,3 @@
-import '../../data/models/todo_model.dart';
 class TodoEntity {
   String id;
   bool completed;
@@ -8,8 +7,4 @@ class TodoEntity {
     this.completed,
     this.description,
   });
-
-  TodoModel todoModel(){
-    return TodoModel(id: this.id);
-  }
 }
