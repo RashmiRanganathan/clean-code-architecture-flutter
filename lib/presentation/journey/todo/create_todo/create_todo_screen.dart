@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../domain/entities/todo_entity.dart';
+
 class CreateTodoScreen extends StatefulWidget {
   CreateTodoScreen({
     Key key,
@@ -10,6 +12,8 @@ class CreateTodoScreen extends StatefulWidget {
 }
 
 class _CreateTodoScreenState extends State<CreateTodoScreen> {
+  var descriptionController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -17,6 +21,7 @@ class _CreateTodoScreenState extends State<CreateTodoScreen> {
 
   @override
   void dispose() {
+    descriptionController.dispose();
     super.dispose();
   }
 
@@ -27,7 +32,26 @@ class _CreateTodoScreenState extends State<CreateTodoScreen> {
           centerTitle: true,
         ),
         body: Center(
-          child: Text('CODE !'),
+          child: Column(
+            children: [
+              SizedBox(
+                width: 200,
+                child: TextField(
+                  controller: descriptionController,
+                  decoration: const InputDecoration(labelText: 'Description'),
+                ),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  final TodoEntity todo = TodoEntity(
+                    description: descriptionController.text,
+                  );
+                },
+                child: const Text('Create'),
+              )
+            ],
+          ),
         ),
       );
 }

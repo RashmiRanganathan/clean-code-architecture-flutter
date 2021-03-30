@@ -1,3 +1,7 @@
+import 'package:flutter/material.dart';
+
 class TodoEntity {
-  TodoEntity();
+  final String description;
+
+  TodoEntity({@required this.description});
 }
