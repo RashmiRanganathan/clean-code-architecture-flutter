@@ -1,1 +1,3 @@
-abstract class TodoRespository {}
+abstract class TodoRespository {
+  Future<void> deleteTodoById({String id});
+}

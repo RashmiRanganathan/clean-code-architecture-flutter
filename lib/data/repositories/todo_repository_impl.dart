@@ -10,4 +10,14 @@ class TodoRespositoryImpl extends TodoRespository {
     this.todoRemoteDatasource,
     this.todoLocalDatasource,
   });
+
+  @override
+  Future<void> deleteTodoById({String id}) async {
+    try {
+      await todoLocalDatasource.delete(id);
+      await todoRemoteDatasource.deleteTodoById(id);
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
