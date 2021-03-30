@@ -1,4 +1,5 @@
 import 'package:clean_code_architecture_flutter/common/constants/route_constants.dart';
+import 'package:clean_code_architecture_flutter/presentation/journey/todo/todo_list/widgets/todo_item.dart';
 import 'package:flutter/material.dart';
 
 class TodoListScreen extends StatefulWidget {
@@ -34,8 +35,11 @@ class _TodoListScreenState extends State<TodoListScreen> {
             )
           ],
         ),
-        body: Center(
-          child: Text('CODE !'),
+        body: ListView.builder(
+          itemBuilder: (context, index) {
+            return TodoItem();
+          },
+          itemCount: 5,
         ),
       );
 }
