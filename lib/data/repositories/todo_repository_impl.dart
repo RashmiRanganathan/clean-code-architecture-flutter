@@ -2,7 +2,6 @@ import 'package:clean_code_architecture_flutter/data/datasources/local/local_dat
 import 'package:clean_code_architecture_flutter/data/datasources/remote/todo_remote_datasource.dart';
 import 'package:clean_code_architecture_flutter/data/models/todos_model.dart';
 import 'package:clean_code_architecture_flutter/domain/repositories/todo_repository.dart';
-
 class TodoRespositoryImpl extends TodoRespository {
   final TodoRemoteDatasource todoRemoteDatasource;
   final TodoLocalDatasource todoLocalDatasource;
@@ -12,7 +11,9 @@ class TodoRespositoryImpl extends TodoRespository {
     this.todoLocalDatasource,
   });
 
-  @override
+  
+  Future<Todos> getTodos() async => await todoRemoteDatasource.getTodos();
+
   Future<void> deleteTodoById({String id}) async {
     try {
       await todoLocalDatasource.delete(id);
@@ -22,7 +23,7 @@ class TodoRespositoryImpl extends TodoRespository {
     }
   }
 
-  Future<void> update({String id}) async {
+   Future<void> update({String id}) async {
     try {
       Map<String, dynamic> payload = {'completed': true};
       print('REPO: $id dan $payload');
@@ -31,5 +32,4 @@ class TodoRespositoryImpl extends TodoRespository {
       throw Exception('Failed to update data');
     }
   }
-  Future<Todos> getTodos() async => await todoRemoteDatasource.getTodos();
 }

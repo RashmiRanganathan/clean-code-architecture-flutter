@@ -10,11 +10,6 @@ class TodoInitial extends TodoState {}
 
 class DeleteTodoLoading extends TodoState {}
 
-class DeleteTodoSuccess extends TodoState {}
-
-class DeleteTodoError extends TodoState {}
-
-class UpdateTodoSuccess extends TodoState {}
 class TodoLoadingState extends TodoState {}
 
 class TodoErrorState extends TodoState {}
@@ -24,3 +19,9 @@ class TodoFetchState extends TodoState {
 
   TodoFetchState({this.todos}) : super(todos: todos);
 }
+
+class DeleteTodoSuccess extends TodoState {}
+
+class DeleteTodoError extends TodoState {}
+
+class UpdateTodoSuccess extends TodoState {}

@@ -8,18 +8,20 @@ class TodoRemoteDatasource {
 
   String baseUrl = 'https://api-nodejs-todolist.herokuapp.com/task';
 
-  Future<void> deleteTodoById(String id) async {
-    await httpClient.delete('$baseUrl/$id');
+  Future<Todos> getTodos() async {
+    final response =
+        await httpClient.get(TodoEndpoints.getCreateUpdateDeletePath);
+
+    return Todos.fromJson(response);
   }
+  
+  Future<void> deleteTodoById(String id) async {
+    await httpClient.delete('${TodoEndpoints.getCreateUpdateDeletePath}/$id');
+  }
+
 
   Future<void> updateTodoById(String id, dynamic data) async {
     final response = await httpClient.put('$baseUrl/$id', data);
     print('response data $response');
-  }
-
-  Future<Todos> getTodos() async {
-    final response = await httpClient.get(TodoEndpoints.getCreateUpdateDeletePath);
-
-    return Todos.fromJson(response);
   }
 }

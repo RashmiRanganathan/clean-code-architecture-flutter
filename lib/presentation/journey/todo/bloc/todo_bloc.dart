@@ -15,39 +15,23 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
 
   @override
   Stream<TodoState> mapEventToState(TodoEvent event) async* {
-    if (event is DeleteTodo) {
-      yield* _mapDeleteTodoToState(event);
-    }else if(event is UpdateTodo){
-      yield* _mapUpdateToState(event);
-    }
      switch (event.runtimeType) {
       case TodoFetchEvent:
         yield* _mapTodoFetchEventToState(event);
         break;
-    }
-  }
-
-  Stream<TodoState> _mapDeleteTodoToState(DeleteTodo event) async* {
-    yield DeleteTodoLoading();
-    try {
-      await todousecase.deleteTodoById(id: event.id);
-    } catch (e) {
-      print(e);
-      yield DeleteTodoError();
+      case DeleteTodo:
+        yield* _mapDeleteTodoToState(event);
+        break;
+      case UpdateTodo:
+        yield* _mapUpdateToState(event);
+        break;
     }
   }
 
   @override
   TodoState get initialState => TodoInitial();
 
-  Stream<TodoState> _mapUpdateToState(UpdateTodo event) async* {
-    try {
-    await todousecase.update(id: event.id);
-     yield UpdateTodoSuccess();
-    } catch (e) {
-      yield TodoErrorState();
-    }
-  }
+  
 
   Stream<TodoState> _mapTodoFetchEventToState(
     TodoFetchEvent event,
@@ -56,6 +40,24 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     try {
       Todos data = await todousecase.getTodos();
       yield TodoFetchState(todos: data);
+    } catch (e) {
+      yield TodoErrorState();
+    }
+  }
+
+  Stream<TodoState> _mapDeleteTodoToState(DeleteTodo event) async* {
+    try {
+      await todousecase.deleteTodoById(id: event.id);
+    } catch (e) {
+      print(e);
+      yield DeleteTodoError();
+    }
+  }
+
+  Stream<TodoState> _mapUpdateToState(UpdateTodo event) async* {
+    try {
+    await todousecase.update(id: event.id);
+     yield UpdateTodoSuccess();
     } catch (e) {
       yield TodoErrorState();
     }
