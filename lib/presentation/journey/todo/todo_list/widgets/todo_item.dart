@@ -1,3 +1,5 @@
+import 'package:clean_code_architecture_flutter/presentation/journey/todo/todo_list/widgets/swipe_left.dart';
+import 'package:clean_code_architecture_flutter/presentation/journey/todo/todo_list/widgets/swipe_right.dart';
 import 'package:flutter/material.dart';
 
 class TodoItem extends StatefulWidget {
@@ -16,12 +18,8 @@ class _TodoItemState extends State<TodoItem> {
           ),
           onDismissed: (direction) {},
           key: Key('a'),
-          background: Container(
-            color: Colors.red,
-          ),
-          secondaryBackground: Container(
-            color: Colors.green,
-          ),
+          background: SwipeLeft(),
+          secondaryBackground: SwipeRight(),
         ));
   }
 }
