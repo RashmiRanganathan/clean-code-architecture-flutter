@@ -1,3 +1,4 @@
+import 'package:clean_code_architecture_flutter/domain/entities/todo_entity.dart';
 import 'package:clean_code_architecture_flutter/domain/usescases/todo_usecase.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,6 +20,9 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       case AddTodoEvent:
         yield* _mapAddTodoEvent(event);
         break;
+      case GetTodoEvent:
+        yield* _mapGetTodoEventToState(event);
+        break;
     }
   }
 
@@ -29,5 +33,10 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     await todousecase
         .createTodo(TodoModel(description: event.entity.description));
     yield CreateTodoSuccessfulState();
+  }
+
+  Stream<TodoState> _mapGetTodoEventToState(GetTodoEvent event) async* {
+    List<TodoEntity> todos = await todousecase.getTodo();
+    yield GetTodoSuccessState(todos);
   }
 }

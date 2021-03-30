@@ -3,4 +3,5 @@ import '../entities/todo_entity.dart';
 
 abstract class TodoRespository {
   Future<void> createTodo(TodoModel model);
+  Future<List<TodoModel>> getTodo();
 }

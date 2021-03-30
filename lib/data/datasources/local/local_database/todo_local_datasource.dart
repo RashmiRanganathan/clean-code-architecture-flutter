@@ -7,8 +7,8 @@ class TodoLocalDatasource extends BaseLocalDataSource<TodoTable, TodoModel> {
   TodoLocalDatasource() : super(boxName: HiveTableNameConstants.todoTableName);
 
   @override
-  Future<List<TodoModel>> getFormattedData() {
-    // TODO: implement getFormattedData
-    throw UnimplementedError();
+  Future<List<TodoModel>> getFormattedData() async {
+    List<TodoModel> todos = [TodoModel(description: 'Todo1'), TodoModel(description: 'Todo1')];
+    return todos;
   }
 }

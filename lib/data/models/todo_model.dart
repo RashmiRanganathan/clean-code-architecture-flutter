@@ -4,4 +4,8 @@ class TodoModel extends TodoEntity {
   String description;
 
   TodoModel({String description}) : super(description: description);
+
+  TodoEntity toEntity() {
+    return TodoEntity(description: description);
+  }
 }
