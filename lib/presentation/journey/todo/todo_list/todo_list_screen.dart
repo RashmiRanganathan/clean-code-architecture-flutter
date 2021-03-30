@@ -1,7 +1,11 @@
 import 'package:clean_code_architecture_flutter/common/constants/route_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../common/injector/injector.dart';
 import '../../../../domain/entities/todo_entity.dart';
+import '../bloc/todo_bloc.dart';
+import '../bloc/todo_state.dart';
 
 class TodoListScreen extends StatefulWidget {
   TodoListScreen({
@@ -14,14 +18,17 @@ class TodoListScreen extends StatefulWidget {
 
 class _TodoListScreenState extends State<TodoListScreen> {
   List<TodoEntity> todoList = [];
+  TodoBloc bloc;
   @override
   void initState() {
     super.initState();
+    bloc = Injector.resolve<TodoBloc>();
   }
 
   @override
   void dispose() {
     super.dispose();
+    bloc.close();
   }
 
   // toggleCheckbox(int index){
@@ -30,26 +37,33 @@ class _TodoListScreenState extends State<TodoListScreen> {
 
   @override
   Widget build(BuildContext buildContext) => Scaffold(
-        appBar: AppBar(
-          title: Text('TODOS'),
-          centerTitle: true,
-          actions: [
-            IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () => createTodo(buildContext),
-            )
-          ],
-        ),
-        body: todoList.length > 0
-            ? ListView.builder(
-                itemCount: todoList.length,
-                itemBuilder: (context, index) {
-                  TodoEntity todoItem = todoList[index];
-                  return eachRow(todoItem, index);
-                },
-              )
-            : defaultinitialScreen(),
-      );
+      appBar: AppBar(
+        title: Text('TODOS'),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () => createTodo(buildContext),
+          )
+        ],
+      ),
+      body: BlocProvider(
+          create: (context) => bloc,
+          child: BlocConsumer<TodoBloc, TodoState>(builder: (context, state) {
+            return todoList.length > 0
+                ? ListView.builder(
+                    itemCount: todoList.length,
+                    itemBuilder: (context, index) {
+                      TodoEntity todoItem = todoList[index];
+                      return eachRow(todoItem, index);
+                    },
+                  )
+                : defaultinitialScreen();
+          }, listener: (context, state) {
+            if (state is UpdatedList) {
+              // Navigator.of(context).pop();
+            }
+          })));
 
   Container defaultinitialScreen() {
     return Container(
