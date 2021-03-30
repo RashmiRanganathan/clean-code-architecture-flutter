@@ -41,7 +41,6 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   }
 
   Stream<TodoState> _mapDeleteTodoToState(DeleteTodo event) async* {
-    yield DeleteTodoLoading();
     try {
       await todousecase.deleteTodoById(id: event.id);
     } catch (e) {
