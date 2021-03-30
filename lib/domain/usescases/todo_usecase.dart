@@ -4,4 +4,8 @@ class Todousecase {
   final TodoRespository todoRespository;
 
   Todousecase({this.todoRespository});
+
+  Future<void> deleteTodoById({String id}) async {
+    await todoRespository.deleteTodoById(id: id);
+  }
 }
