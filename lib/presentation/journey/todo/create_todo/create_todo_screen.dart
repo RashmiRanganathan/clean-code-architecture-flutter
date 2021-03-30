@@ -27,7 +27,23 @@ class _CreateTodoScreenState extends State<CreateTodoScreen> {
           centerTitle: true,
         ),
         body: Center(
-          child: Text('CODE !'),
+          child: Padding(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              children: [
+                TextField(
+                  decoration: InputDecoration(labelText: "description"),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                RaisedButton(
+                  onPressed: () {},
+                  child: Text("Save"),
+                )
+              ],
+            ),
+          ),
         ),
       );
 }
