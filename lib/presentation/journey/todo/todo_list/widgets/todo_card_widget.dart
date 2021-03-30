@@ -50,6 +50,7 @@ class _TodoCardState extends State<TodoCard> {
                   child: Text(
                 widget.text,
                 style: TextStyle(
+                    fontWeight: FontWeight.bold,
                     decoration: _click
                         ? TextDecoration.lineThrough
                         : TextDecoration.none),
