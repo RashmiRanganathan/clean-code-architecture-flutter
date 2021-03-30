@@ -37,14 +37,12 @@ class _TodoCardState extends State<TodoCard> {
                       _click = !_click;
                     });
                   },
-                  child: _click
-                      ? Icon(
-                          Icons.check_circle_rounded,
-                          color: Colors.grey,
-                        )
-                      : Icon(
-                          Icons.check_circle_outline_rounded,
-                        ),
+                  child: Icon(
+                    _click
+                        ? Icons.check_circle_rounded
+                        : Icons.check_circle_outline_rounded,
+                    color: Colors.grey,
+                  ),
                 ),
               ),
               SizedBox(width: 30),
