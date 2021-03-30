@@ -10,8 +10,8 @@ class Todos {
     count = json['count'];
     if (json['data'] != null) {
       data = List<TodoModel>();
-      json['data'].forEach((v) {
-        data.add(TodoModel.fromJson(v));
+      json['data'].forEach((todo) {
+        data.add(TodoModel.fromJson(todo));
       });
     }
   }
@@ -20,7 +20,7 @@ class Todos {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['count'] = this.count;
     if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
+      data['data'] = this.data.map((todo) => todo.toJson()).toList();
     }
     return data;
   }
