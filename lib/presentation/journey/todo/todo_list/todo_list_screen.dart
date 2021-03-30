@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../common/injector/injector.dart';
 import '../../../../domain/entities/todo_entity.dart';
 import '../bloc/todo_bloc.dart';
+import '../bloc/todo_event.dart';
 import '../bloc/todo_state.dart';
 
 class TodoListScreen extends StatefulWidget {
@@ -28,89 +29,94 @@ class _TodoListScreenState extends State<TodoListScreen> {
   @override
   void dispose() {
     super.dispose();
-    bloc.close();
   }
-
-  // toggleCheckbox(int index){
-  //   TodoEntity currentTodo =
-  // }
 
   @override
   Widget build(BuildContext buildContext) => Scaffold(
-      appBar: AppBar(
-        title: Text('TODOS'),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => createTodo(buildContext),
-          )
-        ],
-      ),
-      body: BlocProvider(
+        appBar: AppBar(
+          title: Text('TODOS'),
+          centerTitle: true,
+          actions: [
+            IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () =>
+                  Navigator.of(context).pushNamed(RouteList.createTodo),
+            )
+          ],
+        ),
+        body: BlocProvider<TodoBloc>(
           create: (context) => bloc,
-          child: BlocConsumer<TodoBloc, TodoState>(builder: (context, state) {
-            return todoList.length > 0
-                ? ListView.builder(
-                    itemCount: todoList.length,
-                    itemBuilder: (context, index) {
-                      TodoEntity todoItem = todoList[index];
-                      return eachRow(todoItem, index);
-                    },
-                  )
-                : defaultinitialScreen();
-          }, listener: (context, state) {
-            if (state is UpdatedList) {
-              // Navigator.of(context).pop();
-            }
-          })));
+          child: BlocBuilder(
+            bloc: bloc,
+            builder: mapStateToWidget,
+          ),
+        ),
+      );
 
-  Container defaultinitialScreen() {
-    return Container(
-        alignment: Alignment.center, child: Text('Add some new tasks'));
+  void mapStateListner(context, state) {
+    if (state is UpdatedList) {
+      print('No :  Description , Completed');
+      for (final item in state.todoList) {
+        print(
+            '${state.todoList.indexOf(item)} :  ${item.description} , ${item.completed}');
+      }
+    }
   }
 
-  Container eachRow(TodoEntity todo, int index) {
-    return Container(
+  Widget mapStateToWidget(context, state) {
+    switch (state.runtimeType) {
+      case UpdatedList:
+      case TodoInitial:
+        if (state.todoList.length > 0) {
+          return ListView.builder(
+            itemCount: state.todoList.length,
+            itemBuilder: (context, index) =>
+                eachRow(state.todoList[index], index),
+          );
+        }
+        if (state.todoList.isEmpty) {
+          return defaultinitialScreen();
+        }
+        return Container();
+        break;
+      default:
+        return Container();
+    }
+  }
+
+  Container defaultinitialScreen() => Container(
+        alignment: Alignment.center,
+        child: Text('Add some new tasks'),
+      );
+
+  Container eachRow(TodoEntity todo, int index) => Container(
         margin: const EdgeInsets.all(8.0),
         child: Dismissible(
-            key: UniqueKey(),
-            onDismissed: (DismissDirection dismiss) {
-              setState(() {
-                todoList.removeAt(index);
-              });
-            },
-            child: Row(
-              children: [
-                Checkbox(
-                  value: todo.completed,
-                  onChanged: (bool value) {
-                    setState(() {
-                      todo.completed = !todo.completed;
-                    });
-                  },
+          key: UniqueKey(),
+          onDismissed: (DismissDirection dismiss) {
+            bloc.add(DeleteTodoEvent(index));
+          },
+          child: Row(
+            children: [
+              Checkbox(
+                value: todo.completed,
+                onChanged: (bool value) {
+                  bloc.add(CompleteTodoEvent(index));
+                },
+              ),
+              SizedBox(
+                width: 6.0,
+              ),
+              Text(
+                todo.description,
+                style: TextStyle(
+                  decoration: todo.completed
+                      ? TextDecoration.lineThrough
+                      : TextDecoration.none,
                 ),
-                SizedBox(
-                  width: 6.0,
-                ),
-                Text(todo.description,
-                    style: TextStyle(
-                        decoration: todo.completed
-                            ? TextDecoration.lineThrough
-                            : TextDecoration.none)),
-              ],
-            )));
-  }
-
-  void createTodo(BuildContext context) async {
-    await Navigator.of(context)
-        .pushNamed(RouteList.createTodo)
-        .then((value) => updateTheTodoList(value));
-  }
-
-  void updateTheTodoList(String value) {
-    setState(() {
-      todoList.add(TodoEntity(completed: false, description: value));
-    });
-  }
+              ),
+            ],
+          ),
+        ),
+      );
 }

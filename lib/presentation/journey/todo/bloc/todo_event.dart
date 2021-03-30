@@ -2,7 +2,7 @@ abstract class TodoEvent {}
 
 class AddTodoEvent extends TodoEvent {
   String description;
-  AddTodoEvent(this.description);
+  AddTodoEvent({this.description});
 }
 
 class DeleteTodoEvent extends TodoEvent {

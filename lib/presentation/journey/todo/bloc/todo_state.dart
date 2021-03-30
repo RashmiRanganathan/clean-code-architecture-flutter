@@ -6,7 +6,7 @@ abstract class TodoState {
 }
 
 class TodoInitial extends TodoState {
-  TodoInitial(List<TodoEntity> todoList) : super(todoList);
+  TodoInitial() : super([]);
 }
 
 class UpdatedList extends TodoState {

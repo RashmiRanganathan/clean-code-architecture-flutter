@@ -14,6 +14,9 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   TodoBloc({this.todousecase});
 
   @override
+  TodoState get initialState => TodoInitial();
+
+  @override
   Stream<TodoState> mapEventToState(TodoEvent event) async* {
     switch (event.runtimeType) {
       case AddTodoEvent:
@@ -46,7 +49,4 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     todoList[event.index].completed = !todoList[event.index].completed;
     yield UpdatedList(todoList);
   }
-
-  @override
-  TodoState get initialState => TodoInitial([]);
 }
