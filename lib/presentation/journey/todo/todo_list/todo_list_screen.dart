@@ -37,7 +37,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
         ),
         body: ListView.builder(
           itemBuilder: (context, index) {
-            return TodoItem();
+            return TodoItem('SomeText', true);
           },
           itemCount: 5,
         ),

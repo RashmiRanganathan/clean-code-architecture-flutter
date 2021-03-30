@@ -3,6 +3,10 @@ import 'package:clean_code_architecture_flutter/presentation/journey/todo/todo_l
 import 'package:flutter/material.dart';
 
 class TodoItem extends StatefulWidget {
+  final String text;
+  final bool isCompleted;
+
+  TodoItem(this.text, this.isCompleted);
   @override
   _TodoItemState createState() => _TodoItemState();
 }
@@ -14,10 +18,14 @@ class _TodoItemState extends State<TodoItem> {
         elevation: 3,
         child: Dismissible(
           child: ListTile(
-            title: Text('Text'),
+            title: Text(widget.text,
+                style: TextStyle(
+                    decoration: widget.isCompleted
+                        ? TextDecoration.lineThrough
+                        : null)),
           ),
           onDismissed: (direction) {},
-          key: Key('a'),
+          key: Key(widget.text),
           background: SwipeLeft(),
           secondaryBackground: SwipeRight(),
         ));
