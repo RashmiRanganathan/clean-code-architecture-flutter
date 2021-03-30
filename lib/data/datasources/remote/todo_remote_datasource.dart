@@ -7,8 +7,13 @@ class TodoRemoteDatasource {
   TodoRemoteDatasource({this.httpClient});
 
   Future<Todos> getTodos() async {
-    final response = await httpClient.get(TodoEndpoints.getCreateUpdateDeletePath);
+    final response =
+        await httpClient.get(TodoEndpoints.getCreateUpdateDeletePath);
 
     return Todos.fromJson(response);
+  }
+  
+  Future<void> deleteTodoById(String id) async {
+    await httpClient.delete('${TodoEndpoints.getCreateUpdateDeletePath}/$id');
   }
 }
