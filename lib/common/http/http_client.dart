@@ -26,6 +26,7 @@ class HttpClient {
 
   Map<String, String> generateAuthorizationHeader() => {
         HttpConstants.authorization: HttpConstants.authorizationValue,
+        HttpConstants.contentType: HttpConstants.jsonContentType,
       };
 
   Map<String, String> generateRequestHeader([
@@ -41,7 +42,6 @@ class HttpClient {
     Map<String, String> overrideHeader = const {},
   }) async {
     final requestHeader = generateRequestHeader(overrideHeader);
-
     final Response response = await client.get(
       getParsedUrl(path),
       headers: requestHeader,

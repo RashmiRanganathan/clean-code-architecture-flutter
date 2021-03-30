@@ -1,4 +1,5 @@
 import 'package:clean_code_architecture_flutter/domain/entities/todo_entity.dart';
+
 class TodoModel extends TodoEntity {
   TodoModel({
     String id,
@@ -6,29 +7,26 @@ class TodoModel extends TodoEntity {
     bool completed,
     String description,
     DateTime createdAt,
-    DateTime updatedAt
+    DateTime updatedAt,
   }) : super(
-     id: id,
-     owner: owner,
-     completed: completed,
-     description: description,
-     createdAt: createdAt,
-     updatedAt: updatedAt
-  );
-  factory TodoModel.fromJson(dynamic json){
+          id: id,
+          owner: owner,
+          completed: completed,
+          description: description,
+          createdAt: createdAt,
+          updatedAt: updatedAt,
+        );
+  factory TodoModel.fromJson(dynamic json) {
     return TodoModel(
-      id: json['_id'],
-      owner: json['owner'],
-      completed: json['completed'],
-      description: json['description'],
-      createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt'])
-    );
+        id: json['_id'],
+        owner: json['owner'],
+        completed: json['completed'],
+        description: json['description'],
+        createdAt: DateTime.parse(json['createdAt']),
+        updatedAt: DateTime.parse(json['updatedAt']));
   }
-  Map<String,dynamic>  toJson(){
-    return {
-      'description' : description,
-      'completed': completed
-    };
+
+  Map<String, dynamic> toJson() {
+    return {'description': description, 'completed': completed};
   }
 }
