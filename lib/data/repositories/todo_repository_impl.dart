@@ -2,7 +2,7 @@ import 'package:clean_code_architecture_flutter/data/datasources/local/local_dat
 import 'package:clean_code_architecture_flutter/data/datasources/remote/todo_remote_datasource.dart';
 import 'package:clean_code_architecture_flutter/domain/repositories/todo_repository.dart';
 
-import '../../domain/entities/todo_entity.dart';
+import '../models/todo_model.dart';
 
 class TodoRespositoryImpl extends TodoRespository {
   final TodoRemoteDatasource todoRemoteDatasource;
@@ -14,7 +14,7 @@ class TodoRespositoryImpl extends TodoRespository {
   });
 
   @override
-  Future<String> update(TodoEntity todoModel) async{
+  Future<String> update(TodoModel todoModel) async{
      try {
        String id = todoModel.id;
        Map<String,dynamic> payload = {
