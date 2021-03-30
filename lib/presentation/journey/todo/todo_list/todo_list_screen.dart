@@ -26,7 +26,6 @@ class _TodoListScreenState extends State<TodoListScreen> {
 
   @override
   void dispose() {
-    todoBloc?.close();
     super.dispose();
   }
 

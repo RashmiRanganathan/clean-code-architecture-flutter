@@ -9,8 +9,12 @@ class TodoTable extends TodoModel {
   @HiveField(1)
   String description;
 
-  TodoTable({this.description}) : super(description: description);
+  @HiveField(2)
+  bool completed;
+
+  TodoTable({this.description, this.completed})
+      : super(description: description, completed: completed);
 
   factory TodoTable.fromModel(TodoModel model) =>
-      TodoTable(description: model.description);
+      TodoTable(description: model.description, completed: model.completed);
 }

@@ -18,15 +18,18 @@ class TodoTableAdapter extends TypeAdapter<TodoTable> {
     };
     return TodoTable(
       description: fields[1] as String,
+      completed: fields[2] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, TodoTable obj) {
     writer
+      ..writeByte(2)
       ..writeByte(1)
-      ..writeByte(1)
-      ..write(obj.description);
+      ..write(obj.description)
+      ..writeByte(2)
+      ..write(obj.completed);
   }
 
   @override

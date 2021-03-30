@@ -22,6 +22,6 @@ class TodoRespositoryImpl extends TodoRespository {
 
   @override
   Future<List<TodoModel>> getTodo() {
-    return todoLocalDatasource.getFormattedData();
+    return todoLocalDatasource.getAll();
   }
 }
