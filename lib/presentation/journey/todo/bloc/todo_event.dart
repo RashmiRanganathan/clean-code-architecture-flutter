@@ -7,3 +7,5 @@ class AddTodoEvent extends TodoEvent {
 
   AddTodoEvent({this.entity});
 }
+
+class FetchTodoItems extends TodoEvent {}

@@ -19,4 +19,9 @@ class TodoRespositoryImpl extends TodoRespository {
     return todoLocalDatasource.put(
         model.description, TodoTable.fromModel(model));
   }
+
+  @override
+  Future<List<TodoModel>> fetchAll() {
+    throw todoLocalDatasource.getAll();
+  }
 }

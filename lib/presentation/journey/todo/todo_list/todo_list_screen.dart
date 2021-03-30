@@ -1,4 +1,6 @@
 import 'package:clean_code_architecture_flutter/common/constants/route_constants.dart';
+import 'package:clean_code_architecture_flutter/common/injector/injector.dart';
+import 'package:clean_code_architecture_flutter/presentation/journey/todo/bloc/todo_bloc.dart';
 import 'package:clean_code_architecture_flutter/presentation/journey/todo/todo_list/widgets/todo_item.dart';
 import 'package:flutter/material.dart';
 
@@ -12,9 +14,12 @@ class TodoListScreen extends StatefulWidget {
 }
 
 class _TodoListScreenState extends State<TodoListScreen> {
+  TodoBloc _bloc;
+
   @override
   void initState() {
     super.initState();
+    _bloc = Injector.resolve<TodoBloc>();
   }
 
   @override
