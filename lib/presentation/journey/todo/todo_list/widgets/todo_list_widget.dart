@@ -13,10 +13,7 @@ class TodoListWidget extends StatelessWidget {
       itemBuilder: (context, index) {
         final todos = state.todos.data[index];
         return TodoCard(
-          text1: Text(
-            '${index + 1}. ${todos.description}',
-          ),
-          text2: Text(todos?.completed ?? false ? 'DONE' : 'IN PROGRESS'),
+          text: '${todos.description}',
         );
       },
     );
