@@ -1,8 +1,16 @@
 import 'package:clean_code_architecture_flutter/common/constants/route_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../common/injector/injector.dart';
 import '../../../../domain/entities/todo_entity.dart';
 import '../../../../domain/entities/todo_entity.dart';
+import '../bloc/todo_bloc.dart';
+import '../bloc/todo_bloc.dart';
+import '../bloc/todo_bloc.dart';
+import '../bloc/todo_event.dart';
+import '../bloc/todo_state.dart';
+import '../bloc/todo_state.dart';
 import 'widgets/todo_item.dart';
 
 class TodoListScreen extends StatefulWidget {
@@ -38,8 +46,12 @@ class _TodoListScreenState extends State<TodoListScreen> {
         owner: '1001',
         updatedAt: DateTime.now()),
   ];
+
+  TodoBloc todoBLoc;
   @override
   void initState() {
+    todoBLoc = Injector.resolve<TodoBloc>();
+    // add get todo
     super.initState();
   }
 
@@ -66,28 +78,39 @@ class _TodoListScreenState extends State<TodoListScreen> {
             //do get
             print('do get');
           },
-          child: Center(
-            child: ListView.separated(
-              itemCount: dummyTodos.length,
-              itemBuilder: (context, index) {
-                return TodoListTile(
-                  todoEntity: dummyTodos[index],
-                  onConfirmed: (String id) {
-                    //do update
-                    print('update $id');
+          child: BlocConsumer<TodoBloc, TodoState>(
+            listener: (context, state) {
+              if (state is DeleteTodoSuccess) {}
+            },
+            builder: (context, state) {
+              return Center(
+                child: ListView.separated(
+                  itemCount: dummyTodos.length,
+                  itemBuilder: (context, index) {
+                    return TodoListTile(
+                      todoEntity: dummyTodos[index],
+                      onConfirmed: (String id) {
+                        //do update
+                        print('update $id');
+                      },
+                      onDismissed: (String id) {
+                        //do delete
+                        dummyTodos.removeWhere(
+                            (TodoEntity element) => element.id == id);
+                        print(dummyTodos);
+                        todoBLoc.add(DeleteTodo(id));
+                        print('delete $id');
+                      },
+                    );
                   },
-                  onDismissed: (String id) {
-                    //do delete
-                    print('delete $id');
+                  separatorBuilder: (context, index) {
+                    return Divider(
+                      height: 2,
+                    );
                   },
-                );
-              },
-              separatorBuilder: (context, index) {
-                return Divider(
-                  height: 2,
-                );
-              },
-            ),
+                ),
+              );
+            },
           ),
         ),
       );
