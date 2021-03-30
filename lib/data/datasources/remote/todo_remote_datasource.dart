@@ -13,9 +13,10 @@ class TodoRemoteDatasource {
   }
 
   Future<void> updateTodoById(String id, dynamic data) async {
-    await httpClient.put('$baseUrl/$id', data);
+    final response = await httpClient.put('$baseUrl/$id', data);
+    print('response data $response');
   }
-  
+
   Future<Todos> getTodos() async {
     final response = await httpClient.get(TodoEndpoints.getCreateUpdateDeletePath);
 

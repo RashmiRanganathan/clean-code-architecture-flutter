@@ -1,9 +1,6 @@
 import 'package:clean_code_architecture_flutter/data/models/todos_model.dart';
 import 'package:clean_code_architecture_flutter/domain/repositories/todo_repository.dart';
 
-import '../../data/models/todo_model.dart';
-import '../entities/todo_entity.dart';
-
 class Todousecase {
   final TodoRespository todoRespository;
 
@@ -13,10 +10,9 @@ class Todousecase {
     await todoRespository.deleteTodoById(id: id);
   }
 
-  Future<void> update({TodoEntity todoEntity}) {
-    TodoModel model = todoEntity.todoModel();
-    return todoRespository.update(model);
+  Future<void> update({String id}) {
+    return todoRespository.update(id: id);
   }
-  
+
   Future<Todos> getTodos() => todoRespository.getTodos();
 }

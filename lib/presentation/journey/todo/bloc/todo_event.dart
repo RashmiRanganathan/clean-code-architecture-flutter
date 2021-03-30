@@ -1,5 +1,3 @@
-import '../../../../domain/entities/todo_entity.dart';
-
 abstract class TodoEvent {}
 
 class DeleteTodo extends TodoEvent {
@@ -7,8 +5,8 @@ class DeleteTodo extends TodoEvent {
   DeleteTodo(this.id);
 }
 class UpdateTodo extends TodoEvent{
-  final TodoEntity todo;
-  UpdateTodo(this.todo);
+  final String id;
+  UpdateTodo(this.id);
   
 }
 
