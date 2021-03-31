@@ -25,7 +25,6 @@ class _TodoCardState extends State<TodoCard> {
     return Column(
       children: [
         Container(
-          padding: EdgeInsets.all(10),
           height: 50,
           child: Row(
             children: [
@@ -51,6 +50,8 @@ class _TodoCardState extends State<TodoCard> {
                 widget.text,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
+                    fontSize: 16.0,
+                    height: 1,
                     decoration: _click
                         ? TextDecoration.lineThrough
                         : TextDecoration.none),
