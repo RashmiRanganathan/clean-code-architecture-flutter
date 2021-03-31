@@ -7,7 +7,6 @@ import 'package:clean_code_architecture_flutter/presentation/journey/todo/todo_l
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:clean_code_architecture_flutter/domain/entities/todo_entity.dart';
 
 import '../bloc/todo_event.dart';
 import '../bloc/todo_state.dart';
@@ -52,7 +51,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
               bloc: _todoBloc,
               listener: (context, state) {
                 if (state is UpdateTodoSuccess) {
-                  ScaffoldMessenger.of(context).showSnackBar(
+                  Scaffold.of(context).showSnackBar(
                       SnackBar(content: Text("Update data success")));
                   _todoBloc.add(TodoFetchEvent());
                 }
@@ -68,13 +67,11 @@ class _TodoListScreenState extends State<TodoListScreen> {
                     return TodoListWidget(
                       state: state,
                       onDismissable: (id) {
-                        _todoBloc.add(DeleteTodo(id));
-                        state.todos.data.removeWhere(
-                            (TodoEntity element) => element.id == id);
+                        _todoBloc.add(DeleteTodo(id, state.todos.data));
                       },
                       onUpdate: (id) {
                         _todoBloc.add(UpdateTodo(id));
-                      },
+                        }
                     );
                     break;
                   default:
