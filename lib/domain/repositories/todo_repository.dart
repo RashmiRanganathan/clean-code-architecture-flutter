@@ -7,4 +7,5 @@ abstract class TodoRespository {
   Future<List<TodoModel>> getTodo();
 
   Future<void> deleteTodo(TodoModel model);
+
 }
