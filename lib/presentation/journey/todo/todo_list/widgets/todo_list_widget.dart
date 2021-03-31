@@ -58,10 +58,7 @@ class TodoListWidget extends StatelessWidget {
             return true;
           },
           child: TodoCard(
-            text1: Text(
-              '${index + 1}. ${todos.description}',
-            ),
-            text2: Text(todos?.completed ?? false ? 'DONE' : 'IN PROGRESS'),
+           text: '${todos.description}',
           ),
         );
       },
