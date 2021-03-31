@@ -17,3 +17,9 @@ class TodoFetchState extends TodoState {
 
   TodoFetchState({this.todos}) : super(todos: todos);
 }
+
+class DeleteTodoSuccess extends TodoState {}
+
+class DeleteTodoError extends TodoState {}
+
+class UpdateTodoSuccess extends TodoState {}

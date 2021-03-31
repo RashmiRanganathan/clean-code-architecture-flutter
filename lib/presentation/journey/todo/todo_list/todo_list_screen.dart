@@ -7,6 +7,8 @@ import 'package:clean_code_architecture_flutter/presentation/journey/todo/todo_l
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:clean_code_architecture_flutter/domain/entities/todo_entity.dart';
+
 class TodoListScreen extends StatefulWidget {
   TodoListScreen({
     Key key,
@@ -54,6 +56,9 @@ class _TodoListScreenState extends State<TodoListScreen> {
                   case TodoFetchState:
                     return TodoListWidget(
                       state: state,
+                      onDismissable: (id) {
+                        _todoBloc.add(DeleteTodo(id, state.todos.data));
+                      },
                     );
                     break;
                   default:
