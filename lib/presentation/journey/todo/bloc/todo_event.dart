@@ -1,3 +1,5 @@
+import 'package:clean_code_architecture_flutter/data/models/todo_model.dart';
+
 abstract class TodoEvent {}
 
 class TodoFetchEvent extends TodoEvent {}
