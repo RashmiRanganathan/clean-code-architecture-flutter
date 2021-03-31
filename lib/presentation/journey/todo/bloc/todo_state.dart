@@ -12,3 +12,9 @@ class TodoInitial extends TodoState {
 class UpdatedList extends TodoState {
   UpdatedList(List<TodoEntity> todoList) : super(todoList);
 }
+
+class TodoItemsList extends TodoState {
+  List<TodoEntity> todoList;
+
+  TodoItemsList({this.todoList}) : super(todoList);
+}

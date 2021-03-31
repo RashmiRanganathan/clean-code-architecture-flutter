@@ -28,6 +28,9 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       case CompleteTodoEvent:
         yield* handleCompleteTodoEvent(event);
         break;
+      case FetchToDoListEvent:
+        yield* handleFetchToDoListEvent();
+        break;
       default:
     }
   }
@@ -48,5 +51,11 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     List<TodoEntity> todoList = state.todoList;
     todoList[event.index].completed = !todoList[event.index].completed;
     yield UpdatedList(todoList);
+  }
+
+  Stream<TodoState> handleFetchToDoListEvent() async* {
+    List<TodoEntity> items = await todousecase.getTodos();
+
+    yield TodoItemsList(todoList: items);
   }
 }

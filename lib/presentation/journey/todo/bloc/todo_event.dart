@@ -14,3 +14,7 @@ class CompleteTodoEvent extends TodoEvent {
   int index;
   CompleteTodoEvent(this.index);
 }
+
+class FetchToDoListEvent extends TodoEvent {
+  FetchToDoListEvent();
+}

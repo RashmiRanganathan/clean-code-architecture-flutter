@@ -24,6 +24,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
   void initState() {
     super.initState();
     bloc = Injector.resolve<TodoBloc>();
+    // bloc.add(FetchToDoListEvent());
   }
 
   @override
