@@ -2,6 +2,8 @@ import 'package:clean_code_architecture_flutter/data/datasources/local/local_dat
 import 'package:clean_code_architecture_flutter/data/datasources/remote/todo_remote_datasource.dart';
 import 'package:clean_code_architecture_flutter/domain/repositories/todo_repository.dart';
 
+import '../models/todo_model.dart';
+
 class TodoRespositoryImpl extends TodoRespository {
   final TodoRemoteDatasource todoRemoteDatasource;
   final TodoLocalDatasource todoLocalDatasource;
@@ -10,4 +12,8 @@ class TodoRespositoryImpl extends TodoRespository {
     this.todoRemoteDatasource,
     this.todoLocalDatasource,
   });
+  @override
+  Future<List<TodoModel>> getTodoList()async{
+    return todoRemoteDatasource.getTodoList();
+  }
 }

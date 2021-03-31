@@ -10,6 +10,9 @@ class CreateTodoScreen extends StatefulWidget {
 }
 
 class _CreateTodoScreenState extends State<CreateTodoScreen> {
+    final descriptionController = TextEditingController();
+
+
   @override
   void initState() {
     super.initState();
@@ -17,6 +20,7 @@ class _CreateTodoScreenState extends State<CreateTodoScreen> {
 
   @override
   void dispose() {
+    descriptionController.dispose();
     super.dispose();
   }
 
@@ -27,7 +31,23 @@ class _CreateTodoScreenState extends State<CreateTodoScreen> {
           centerTitle: true,
         ),
         body: Center(
-          child: Text('CODE !'),
+          child: Column(
+            children: [
+              SizedBox(
+                width: 200,
+                child: TextField(
+                  controller: descriptionController,
+                  decoration: const InputDecoration(labelText: 'Description'),
+                ),
+              ),
+              const SizedBox(height: 20),
+              RaisedButton(
+                onPressed: () {
+                },
+                child: const Text('Create'),
+              )
+            ],
+          ),
         ),
       );
 }
