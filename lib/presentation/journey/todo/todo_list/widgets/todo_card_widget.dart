@@ -1,11 +1,16 @@
+import 'package:clean_code_architecture_flutter/domain/entities/todo_entity.dart';
 import 'package:flutter/material.dart';
 
 class TodoCard extends StatefulWidget {
   final String text;
+  final TodoEntity state;
+  final Function (bool) update;
 
   const TodoCard({
     Key key,
     this.text,
+    this.state, 
+    this.update
   }) : super(key: key);
 
   @override
@@ -17,7 +22,7 @@ class _TodoCardState extends State<TodoCard> {
   @override
   void initState() {
     super.initState();
-    _click = false;
+    _click = widget.state.completed??false;
   }
 
   @override
@@ -35,6 +40,7 @@ class _TodoCardState extends State<TodoCard> {
                   onTap: () {
                     setState(() {
                       _click = !_click;
+                      widget.update(_click);
                     });
                   },
                   child: Icon(

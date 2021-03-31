@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class TodoListWidget extends StatelessWidget {
   final TodoState state;
   final Function(String id) onDismissable;
-  final Function(String id) onUpdate;
+  final Function(String id, bool value) onUpdate;
 
   const TodoListWidget({Key key, this.state, this.onDismissable, this.onUpdate})
       : super(key: key);
@@ -17,7 +17,7 @@ class TodoListWidget extends StatelessWidget {
         final todos = state.todos.data[index];
         return Dismissible(
           key: Key('card_todos_${todos.id}'),
-          direction: DismissDirection.horizontal,
+          direction: DismissDirection.endToStart,
          background: Container(
             color: Colors.green,
             child: Align(
@@ -31,34 +31,18 @@ class TodoListWidget extends StatelessWidget {
               ),
             ),
           ),
-          secondaryBackground: Container(
-            color: Colors.red,
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Icon(
-                  Icons.delete,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
 
           onDismissed: (DismissDirection direction) {
             if (direction == DismissDirection.endToStart) {
               onDismissable?.call(todos.id);
             }
           },
-          confirmDismiss: (DismissDirection direction) async{
-            if (direction == DismissDirection.startToEnd) {
-              onUpdate.call(todos.id);
-              return false;
-            }
-            return true;
-          },
           child: TodoCard(
            text: '${todos.description}',
+           state: todos,
+           update: (bool value){
+              onUpdate.call(todos.id, value);
+           },
           ),
         );
       },

@@ -12,5 +12,6 @@ class DeleteTodo extends TodoEvent {
 
 class UpdateTodo extends TodoEvent{
   final String id;
-  UpdateTodo(this.id);
+  final bool value;
+  UpdateTodo(this.id, this.value);
 }

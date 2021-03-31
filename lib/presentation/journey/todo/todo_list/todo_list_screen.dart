@@ -69,8 +69,8 @@ class _TodoListScreenState extends State<TodoListScreen> {
                       onDismissable: (id) {
                         _todoBloc.add(DeleteTodo(id, state.todos.data));
                       },
-                      onUpdate: (id) {
-                        _todoBloc.add(UpdateTodo(id));
+                      onUpdate: (String id, bool value) {
+                        _todoBloc.add(UpdateTodo(id, value));
                         }
                     );
                     break;

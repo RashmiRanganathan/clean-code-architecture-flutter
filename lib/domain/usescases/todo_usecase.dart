@@ -11,7 +11,7 @@ class Todousecase {
     await todoRespository.deleteTodoById(id: id);
   }
 
-  Future<void> update({String id}) {
-    return todoRespository.update(id: id);
+  Future<void> update({String id, bool value}) {
+    return todoRespository.update(id: id, value: value);
   }
 }

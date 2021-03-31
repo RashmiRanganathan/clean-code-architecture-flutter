@@ -61,7 +61,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
 
   Stream<TodoState> _mapUpdateToState(UpdateTodo event) async* {
     try {
-    await todousecase.update(id: event.id);
+    await todousecase.update(id: event.id, value: event.value);
      yield UpdateTodoSuccess();
     } catch (e) {
       yield TodoErrorState();
