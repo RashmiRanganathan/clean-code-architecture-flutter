@@ -57,7 +57,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                     return TodoListWidget(
                       state: state,
                       onDismissable: (id) {
-                        _todoBloc.add(DeleteTodo(id));
+                        _todoBloc.add(DeleteTodo(id, state.todos.data));
                       },
                     );
                     break;
