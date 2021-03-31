@@ -58,8 +58,6 @@ class _TodoListScreenState extends State<TodoListScreen> {
                       state: state,
                       onDismissable: (id) {
                         _todoBloc.add(DeleteTodo(id));
-                        state.todos.data.removeWhere(
-                            (TodoEntity element) => element.id == id);
                       },
                     );
                     break;
