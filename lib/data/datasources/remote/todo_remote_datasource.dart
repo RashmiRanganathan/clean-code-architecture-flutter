@@ -12,8 +12,12 @@ class TodoRemoteDatasource {
 
     return Todos.fromJson(response);
   }
-  
+
   Future<void> deleteTodoById(String id) async {
     await httpClient.delete('${TodoEndpoints.getCreateUpdateDeletePath}/$id');
+  }
+
+  Future<dynamic> updateTodoById(String id, Map<String, dynamic> data) async {
+    return await httpClient.put('${TodoEndpoints.getCreateUpdateDeletePath}/$id', data);
   }
 }

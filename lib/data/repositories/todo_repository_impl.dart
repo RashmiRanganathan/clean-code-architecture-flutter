@@ -30,8 +30,7 @@ class TodoRespositoryImpl extends TodoRespository {
     try {
       String id = todoModel.id;
       Map<String, dynamic> payload = {'completed': todoModel.completed};
-      final String url = 'https://api-nodejs-todolist.herokuapp.com/task/$id';
-      final result = await todoRemoteDatasource.httpClient.put(url, payload);
+      final result = await todoRemoteDatasource.updateTodoById(id, payload);
       return result;
     } catch (e) {
       throw Exception('Failed to update data');
