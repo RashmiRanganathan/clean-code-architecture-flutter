@@ -12,10 +12,10 @@ class GetTodoState extends TodoState {
   });
 }
 
-class PutTodoSuccess extends TodoState {
+class PostTodoSuccess extends TodoState {
   
 }
 
-class PutTodoFailed extends TodoState {
+class PostTodoFailed extends TodoState {
 }
 

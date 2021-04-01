@@ -40,10 +40,10 @@ class _CreateTodoScreenState extends State<CreateTodoScreen> {
           create: (context) => todoBloc,
           child: BlocBuilder<TodoBloc, TodoState>(
             builder: (context, state) {
-              if (state is PutTodoSuccess) {
+              if (state is PostTodoSuccess) {
                 Navigator.of(context).pushNamed(RouteList.todoList);
               }
-              if (state is PutTodoFailed) {
+              if (state is PostTodoFailed) {
                 print('FAILED');
               }
               return Center(
@@ -61,7 +61,7 @@ class _CreateTodoScreenState extends State<CreateTodoScreen> {
                   RaisedButton(
                     onPressed: () {
                       todoBloc.add(
-                          PutTodoListEvent(desc: descriptionController.text));
+                          PostTodoListEvent(desc: descriptionController.text));
                     },
                     child: const Text('Create'),
                   )

@@ -2,7 +2,7 @@ abstract class TodoEvent {}
 
 class GetTodoListEvent extends TodoEvent {}
 
-class PutTodoListEvent extends TodoEvent {
+class PostTodoListEvent extends TodoEvent {
   final String desc;
-  PutTodoListEvent({this.desc});
+  PostTodoListEvent({this.desc});
 }
