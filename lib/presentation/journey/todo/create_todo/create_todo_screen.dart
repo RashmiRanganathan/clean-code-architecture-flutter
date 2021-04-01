@@ -31,21 +31,27 @@ class _CreateTodoScreenState extends State<CreateTodoScreen> {
   }
 
   @override
-  Widget build(BuildContext buildContext) => Scaffold(
+  Widget build(BuildContext context) => Scaffold(
       appBar: AppBar(
         title: Text('Create Todo'),
         centerTitle: true,
       ),
       body: BlocProvider<TodoBloc>(
           create: (context) => todoBloc,
-          child: BlocBuilder<TodoBloc, TodoState>(
+          child:BlocConsumer<TodoBloc,TodoState>(
+        listener: (context, state) {
+          switch (state.runtimeType) {
+            case PostTodoSuccess:
+
+            todoBloc.add(GetTodoListEvent());
+            return Navigator.of(context).pop();
+            default:
+              break;
+
+          }
+        },
             builder: (context, state) {
-              if (state is PostTodoSuccess) {
-                Navigator.of(context).pushNamed(RouteList.todoList);
-              }
-              if (state is PostTodoFailed) {
-                print('FAILED');
-              }
+           
               return Center(
               child: Column(
                 children: [

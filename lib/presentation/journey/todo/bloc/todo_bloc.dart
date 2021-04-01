@@ -22,6 +22,13 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       case PostTodoListEvent:
         yield* _mapPutListTodoState(event);
         break;
+       case UpdateTodoListEvent:
+        yield* _mapUpdateListTodoState(event);
+        break;
+       case DeleteTodoListEvent:
+        yield* _mapDeleteListTodoState(event);
+        break;
+      
     }
   }
 
@@ -37,11 +44,35 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   Stream<TodoState> _mapPutListTodoState(PostTodoListEvent event) async* {
     try {
       final postTodoList = await todousecase.postTodoList(event.desc);
-      print(postTodoList);
+      print(postTodoList.description);
       yield PostTodoSuccess();
     } catch (e) {
       print(e.toString());
       yield PostTodoFailed();
     }
   }
+
+  Stream<TodoState> _mapUpdateListTodoState(UpdateTodoListEvent event) async* {
+    try {
+      print('${event.check}');
+      print('${event.id}');
+      await todousecase.updateTodoList(event.check ,event.id);
+      yield UpdateTodoSuccess();
+    } catch (e) {
+      print(e.toString());
+      yield UpdateTodoFailed();
+    }
+  }
+
+  Stream<TodoState> _mapDeleteListTodoState(DeleteTodoListEvent event) async* {
+    try {
+      await todousecase.deleteTodoList(event.id);
+      yield DeleteTodoSuccess();
+    } catch (e) {
+      print(e.toString());
+      yield DeleteTodoFailed();
+    }
+  }
+
+
 }

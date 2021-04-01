@@ -19,3 +19,17 @@ class PostTodoSuccess extends TodoState {
 class PostTodoFailed extends TodoState {
 }
 
+class UpdateTodoSuccess extends TodoState {
+  
+}
+
+class UpdateTodoFailed extends TodoState {
+}
+
+class DeleteTodoSuccess extends TodoState {
+  
+}
+
+class DeleteTodoFailed extends TodoState {
+}
+

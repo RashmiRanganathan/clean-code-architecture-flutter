@@ -8,7 +8,6 @@ import '../bloc/todo_bloc.dart';
 import '../bloc/todo_event.dart';
 import '../bloc/todo_state.dart';
 
-
 class TodoListScreen extends StatefulWidget {
   TodoListScreen({
     Key key,
@@ -48,15 +47,41 @@ class _TodoListScreenState extends State<TodoListScreen> {
       ),
       body: BlocProvider<TodoBloc>(
           create: (contex) => bloc,
-          child: BlocBuilder<TodoBloc, TodoState>(
+          child: BlocConsumer<TodoBloc, TodoState>(
+            listener: (context, state) {
+              switch (state.runtimeType) {
+                case UpdateTodoSuccess:
+                  return bloc.add(GetTodoListEvent());
+                case DeleteTodoSuccess:
+                  return bloc.add(GetTodoListEvent());
+                default:
+                  break;
+              }
+            },
             builder: (context, state) {
               if (state is GetTodoState) {
                 return ListView(
                     children: state.todoList
                         .map((todoitem) => ListTile(
-                              title: Text(todoitem.description),
+                              title: GestureDetector(
+                                onTap: () {
+                                  bloc.add(DeleteTodoListEvent(
+                                    id: todoitem.id,
+                                  ));
+                                },
+                                child: Text(todoitem.description),
+                              ),
                               leading: Container(
-                                child: Icon(Icons.check_circle),
+                                child: IconButton(
+                                    icon: Icon(todoitem.completed
+                                        ? Icons.check_circle
+                                        : Icons.check_circle_outline),
+                                    onPressed: () {
+                                      bloc.add(UpdateTodoListEvent(
+                                        check:!todoitem.completed,
+                                        id: todoitem.id,
+                                      ));
+                                    }),
                                 // onChanged: () {}
                               ),
                             ))

@@ -18,9 +18,9 @@ class TodoModel extends TodoEntity {
   return dataList.map((dataitem) => TodoModel.fromJson(dataitem)).toList();
  }
 
-  factory TodoModel.fromJson(Map<String, dynamic> json) {
-    return TodoModel(completed : json['completed'],
-   id : json['id'],
+  static TodoModel fromJson(Map<String, dynamic> json) {
+  return TodoModel(completed : json['completed'],
+   id : json['_id'],
    description : json['description'],
    owner : json['owner'],
    createdAt : json['createdAT'],
