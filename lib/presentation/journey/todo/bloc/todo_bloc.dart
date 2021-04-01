@@ -19,17 +19,29 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       case GetTodoListEvent:
         yield* _mapGetListTodoState(event);
         break;
+      case PutTodoListEvent:
+        yield* _mapPutListTodoState(event);
+        break;
     }
   }
 
   @override
   TodoState get initialState => TodoInitial();
 
-  Stream<TodoState> _mapGetListTodoState(
-      GetTodoListEvent event) async* {
-  final List<TodoModel> getTodoList= await todousecase.getTodoList();
-  print(getTodoList);
-  yield GetTodoState(todoList: getTodoList);
+  Stream<TodoState> _mapGetListTodoState(GetTodoListEvent event) async* {
+    final List<TodoModel> getTodoList = await todousecase.getTodoList();
+    print(getTodoList);
+    yield GetTodoState(todoList: getTodoList);
   }
 
+  Stream<TodoState> _mapPutListTodoState(PutTodoListEvent event) async* {
+    try {
+      final putTodoList = await todousecase.postTodoList(event.desc);
+      print(putTodoList);
+      yield PutTodoSuccess();
+    } catch (e) {
+      print(e.toString());
+      yield PutTodoFailed();
+    }
+  }
 }

@@ -16,4 +16,7 @@ class TodoRespositoryImpl extends TodoRespository {
   Future<List<TodoModel>> getTodoList()async{
     return todoRemoteDatasource.getTodoList();
   }
+  Future<List<TodoModel>> postTodoList(String desc)async {
+    return todoRemoteDatasource.postTodoList(desc);
+  }
 }

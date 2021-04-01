@@ -11,3 +11,11 @@ class GetTodoState extends TodoState {
     @required this.todoList , 
   });
 }
+
+class PutTodoSuccess extends TodoState {
+  
+}
+
+class PutTodoFailed extends TodoState {
+}
+

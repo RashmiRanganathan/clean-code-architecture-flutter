@@ -9,4 +9,7 @@ class Todousecase {
   Future<List<TodoModel>> getTodoList()async{
     return todoRespository.getTodoList();
   }
+  Future<List<TodoModel>> postTodoList(String desc)async{
+    return todoRespository.postTodoList(desc);
+  }
 }
