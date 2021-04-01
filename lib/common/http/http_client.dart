@@ -105,14 +105,15 @@ class HttpClient {
     );
   }
 
-  dynamic put(String path, dynamic data) async {
-    final requestHeader = generateRequestHeader();
+  dynamic put(String path, dynamic data,{ Map<String, String> overrideHeader = const {},}) async {
+    final requestHeader = generateRequestHeader(overrideHeader);
 
     final Response response = await client.put(
       getParsedUrl(path),
       body: json.encode(data),
       headers: requestHeader,
     );
+    print('UPDATE $response');
 
     return HttpUtil.getResponse(
       response,
