@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:clean_code_architecture_flutter/data/models/todo_model.dart';
 import 'package:clean_code_architecture_flutter/data/models/todos_model.dart';
@@ -18,18 +17,23 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
 
   @override
   Stream<TodoState> mapEventToState(TodoEvent event) async* {
-    switch (event.runtimeType) {
+     switch (event.runtimeType) {
       case TodoFetchEvent:
         yield* _mapTodoFetchEventToState(event);
         break;
       case DeleteTodo:
         yield* _mapDeleteTodoToState(event);
         break;
+      case UpdateTodo:
+        yield* _mapUpdateToState(event);
+        break;
     }
   }
 
   @override
   TodoState get initialState => TodoInitial();
+
+  
 
   Stream<TodoState> _mapTodoFetchEventToState(
     TodoFetchEvent event,
@@ -52,6 +56,15 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     } catch (e) {
       print(e);
       yield DeleteTodoError();
+    }
+  }
+
+  Stream<TodoState> _mapUpdateToState(UpdateTodo event) async* {
+    try {
+    await todousecase.update(id: event.id, value: event.value);
+     yield UpdateTodoSuccess();
+    } catch (e) {
+      yield TodoErrorState();
     }
   }
 }

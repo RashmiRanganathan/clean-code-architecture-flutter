@@ -6,13 +6,15 @@ class TodoRemoteDatasource {
   final HttpClient httpClient;
   TodoRemoteDatasource({this.httpClient});
 
+  String baseUrl = 'https://api-nodejs-todolist.herokuapp.com/task';
+
   Future<Todos> getTodos() async {
     final response =
         await httpClient.get(TodoEndpoints.getCreateUpdateDeletePath);
 
     return Todos.fromJson(response);
   }
-
+  
   Future<void> deleteTodoById(String id) async {
     await httpClient.delete('${TodoEndpoints.getCreateUpdateDeletePath}/$id');
   }

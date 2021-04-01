@@ -8,6 +8,8 @@ abstract class TodoState {
 
 class TodoInitial extends TodoState {}
 
+class DeleteTodoLoading extends TodoState {}
+
 class TodoLoadingState extends TodoState {}
 
 class TodoErrorState extends TodoState {}

@@ -10,7 +10,8 @@ class DeleteTodo extends TodoEvent {
   DeleteTodo(this.id, this.todos);
 }
 
-class UpdateTodo extends TodoEvent {
-  final TodoModel todoModel;
-  UpdateTodo(this.todoModel);
+class UpdateTodo extends TodoEvent{
+  final String id;
+  final bool value;
+  UpdateTodo(this.id, this.value);
 }

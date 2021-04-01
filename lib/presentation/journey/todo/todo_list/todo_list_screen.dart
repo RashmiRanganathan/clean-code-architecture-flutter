@@ -7,7 +7,9 @@ import 'package:clean_code_architecture_flutter/presentation/journey/todo/todo_l
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:clean_code_architecture_flutter/domain/entities/todo_entity.dart';
+
+import '../bloc/todo_event.dart';
+import '../bloc/todo_state.dart';
 
 class TodoListScreen extends StatefulWidget {
   TodoListScreen({
@@ -23,6 +25,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
   TodoBloc _todoBloc;
   @override
   void initState() {
+    // add get todo
     super.initState();
     _todoBloc = Injector.resolve<TodoBloc>()..add(TodoFetchEvent());
   }
@@ -44,8 +47,15 @@ class _TodoListScreenState extends State<TodoListScreen> {
             ],
           ),
           body: Center(
-            child: BlocBuilder<TodoBloc, TodoState>(
+            child: BlocConsumer<TodoBloc, TodoState>(
               bloc: _todoBloc,
+              listener: (context, state) {
+                if (state is UpdateTodoSuccess) {
+                  Scaffold.of(context).showSnackBar(
+                      SnackBar(content: Text("Update data success")));
+                  _todoBloc.add(TodoFetchEvent());
+                }
+              },
               builder: (BuildContext context, state) {
                 switch (state.runtimeType) {
                   case TodoLoadingState:
@@ -59,6 +69,9 @@ class _TodoListScreenState extends State<TodoListScreen> {
                       onDismissable: (id) {
                         _todoBloc.add(DeleteTodo(id, state.todos.data));
                       },
+                      onUpdate: (String id, bool value) {
+                        _todoBloc.add(UpdateTodo(id, value));
+                        }
                     );
                     break;
                   default:
