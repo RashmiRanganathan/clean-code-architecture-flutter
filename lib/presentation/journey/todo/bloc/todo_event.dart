@@ -13,8 +13,8 @@ class AddTodo extends TodoEvent {
 }
 
 class UpdateTodo extends TodoEvent {
-  TodoEntity todo;
-  UpdateTodo({this.todo});
+  String id;
+  UpdateTodo({this.id});
 }
 
 class DeleteTodo extends TodoEvent {

@@ -12,7 +12,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   TodoBloc({this.todousecase});
 
   @override
-  TodoState get initialState => TodoInitial();
+  TodoState get initialState => InitialTodos();
 
   @override
   Stream<TodoState> mapEventToState(TodoEvent event) async* {
@@ -34,32 +34,51 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   }
 
   Stream<TodoState> _mapFetchTodoState(FetchTodos event) async* {
-    final todos = await todousecase.getAll(fromLocal: event.fromLocal);
-    yield FetchedTodos(todos: todos);
+    yield LoadingTodos(todos: this.state.todos);
+    try {
+      final todos = await todousecase.getAll(fromLocal: event.fromLocal);
+      yield LoadedTodos(todos: todos);
+    } catch (e) {
+      yield ErrorTodos();
+    }
   }
 
   Stream<TodoState> _mapAddTodoState(AddTodo event) async* {
-    final updatedTodo = await todousecase.create(event.todo);
-    final List<TodoEntity> todos = this.state.todos;
-    todos.add(updatedTodo);
-
-    yield FetchedTodos(todos: todos);
+    final todos = this.state.todos;
+    yield LoadingTodos(todos: todos);
+    try {
+      final updatedTodo = await todousecase.create(event.todo);
+      todos.add(updatedTodo);
+      yield LoadedTodos(todos: todos);
+    } catch (e) {
+      yield ErrorTodos();
+    }
   }
 
   Stream<TodoState> _mapUpdateTodoState(UpdateTodo event) async* {
-    final updatedTodo = await todousecase.update(event.todo);
-    final List<TodoEntity> todos = this.state.todos;
-    todos[todos.indexWhere((TodoEntity todo) => todo.id == updatedTodo.id)] =
-        updatedTodo;
-
-    yield FetchedTodos(todos: todos);
+    final todos = this.state.todos;
+    yield LoadingTodos(todos: todos);
+    try {
+      final todo = todos.singleWhere((TodoEntity todo) => todo.id == event.id);
+      todo.completed = !todo.completed;
+      final updatedTodo = await todousecase.update(todo);
+      todos[todos.indexWhere((TodoEntity todo) => todo.id == updatedTodo.id)] =
+          updatedTodo;
+      yield LoadedTodos(todos: todos);
+    } catch (e) {
+      yield ErrorTodos();
+    }
   }
 
   Stream<TodoState> _mapDeleteTodoState(DeleteTodo event) async* {
-    await todousecase.delete(event.id);
-    final List<TodoEntity> todos = this.state.todos;
-    todos.removeWhere((TodoEntity todo) => todo.id == event.id);
-
-    yield FetchedTodos(todos: todos);
+    final todos = this.state.todos;
+    yield LoadingTodos(todos: todos);
+    try {
+      await todousecase.delete(event.id);
+      todos.removeWhere((TodoEntity todo) => todo.id == event.id);
+      yield LoadedTodos(todos: todos);
+    } catch (e) {
+      yield ErrorTodos();
+    }
   }
 }

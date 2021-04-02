@@ -2,22 +2,22 @@ import 'package:clean_code_architecture_flutter/domain/entities/todo_entity.dart
 
 abstract class TodoState {
   List<TodoEntity> todos;
-  TodoState({this.todos});
+  bool loading;
+  TodoState({this.todos, this.loading});
 }
 
-class TodoInitial extends TodoState {
-  TodoInitial() : super(todos: []);
+class InitialTodos extends TodoState {
+  InitialTodos() : super(todos: [], loading: false);
 }
 
-class FetchedTodos extends TodoState {
-  FetchedTodos({List<TodoEntity> todos}) : super(todos: todos);
+class LoadingTodos extends TodoState {
+  LoadingTodos({List<TodoEntity> todos}) : super(loading: true);
 }
 
-class UpdatedTodo extends TodoState {
-  UpdatedTodo({List<TodoEntity> todos}) : super(todos: todos);
+class LoadedTodos extends TodoState {
+  LoadedTodos({List<TodoEntity> todos}) : super(todos: todos, loading: false);
 }
 
-class DeletedTodo extends TodoState {
-  String id;
-  DeletedTodo({List<TodoEntity> todos}) : super(todos: todos);
+class ErrorTodos extends TodoState {
+  ErrorTodos() : super(loading: false);
 }

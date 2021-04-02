@@ -7,7 +7,8 @@
         {
             "name": "clean_code_architecture_flutter",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "flutterMode": "debug",
         }
     ]
 }

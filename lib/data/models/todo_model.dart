@@ -21,13 +21,14 @@ class TodoModel extends TodoEntity {
       jsonList.map((json) => TodoModel.fromJson(json)).toList();
 
   Map<String, dynamic> toJson() {
-    if (this.description == null) {
-      return {'completed': this.completed};
-    } else if (this.completed == null) {
-      return {'description': this.description};
-    } else {
-      return {};
+    final Map<String, dynamic> json = {};
+    if (this.completed != null) {
+      json['completed'] = this.completed;
     }
+    if (this.description != null) {
+      json['description'] = this.description;
+    }
+    return json;
   }
 
   TodoModel.castFromEntity(final TodoEntity todo)

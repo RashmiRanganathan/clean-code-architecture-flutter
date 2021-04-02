@@ -9,6 +9,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Todo',
+      debugShowCheckedModeBanner: false,
       theme: appTheme(context),
       routes: Routes.getAll(),
       initialRoute: RouteList.dashbaord,

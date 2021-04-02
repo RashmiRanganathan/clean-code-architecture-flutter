@@ -26,6 +26,7 @@ class HttpClient {
 
   Map<String, String> generateAuthorizationHeader() => {
         HttpConstants.authorization: HttpConstants.authorizationValue,
+        HttpConstants.contentType: HttpConstants.jsonContentType
       };
 
   Map<String, String> generateRequestHeader([
@@ -36,11 +37,8 @@ class HttpClient {
         ...overrideHeader,
       };
 
-  dynamic get(
-    String path, {
-    Map<String, String> overrideHeader = const {},
-  }) async {
-    final requestHeader = generateRequestHeader(overrideHeader);
+  dynamic get(String path) async {
+    final requestHeader = generateRequestHeader();
 
     final Response response = await client.get(
       getParsedUrl(path),
@@ -65,14 +63,8 @@ class HttpClient {
     );
   }
 
-  dynamic post(
-    String path,
-    dynamic data, {
-    Map<String, String> overrideHeader = const {
-      HttpConstants.contentType: HttpConstants.jsonContentType
-    },
-  }) async {
-    final requestHeader = generateRequestHeader(overrideHeader);
+  dynamic post(String path, dynamic data) async {
+    final requestHeader = generateRequestHeader();
 
     final Response response = await client.post(
       getParsedUrl(path),
@@ -86,12 +78,8 @@ class HttpClient {
     );
   }
 
-  dynamic patch(
-    String path,
-    dynamic data, {
-    Map<String, String> overrideHeader = const {},
-  }) async {
-    final requestHeader = generateRequestHeader(overrideHeader);
+  dynamic patch(String path, dynamic data) async {
+    final requestHeader = generateRequestHeader();
 
     final Response response = await client.patch(
       getParsedUrl(path),
@@ -119,11 +107,8 @@ class HttpClient {
     );
   }
 
-  dynamic delete(
-    String path, {
-    Map<String, String> overrideHeader = const {},
-  }) async {
-    final requestHeader = generateRequestHeader(overrideHeader);
+  dynamic delete(String path) async {
+    final requestHeader = generateRequestHeader();
 
     final Response response = await client.delete(
       getParsedUrl(path),

@@ -1,11 +1,9 @@
-import 'package:clean_code_architecture_flutter/domain/entities/todo_entity.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:clean_code_architecture_flutter/domain/entities/todo_entity.dart';
 import 'package:clean_code_architecture_flutter/common/injector/injector.dart';
 import 'package:clean_code_architecture_flutter/presentation/journey/todo/bloc/todo_bloc.dart';
 import 'package:clean_code_architecture_flutter/presentation/journey/todo/bloc/todo_event.dart';
-import 'package:clean_code_architecture_flutter/presentation/journey/todo/bloc/todo_state.dart';
 
 import 'package:clean_code_architecture_flutter/common/constants/route_constants.dart';
 import 'package:clean_code_architecture_flutter/presentation/journey/todo/create_todo/create_todo_screen.dart';
@@ -16,21 +14,7 @@ class TodoRoutes {
 
   static Map<String, WidgetBuilder> getAll() {
     return {
-      RouteList.todoList: (context) => BlocBuilder<TodoBloc, TodoState>(
-            bloc: _getTodoBloc..add(FetchTodos()),
-            builder: (context, todoState) => TodoListScreen(
-              todos: todoState.todos,
-              onUpdate: (TodoEntity todo) {
-                _getTodoBloc..add(UpdateTodo(todo: todo));
-              },
-              onDelete: (String id) {
-                _getTodoBloc..add(DeleteTodo(id: id));
-              },
-              forceRefresh: () {
-                _getTodoBloc..add(FetchTodos(fromLocal: false));
-              },
-            ),
-          ),
+      RouteList.todoList: (context) => TodoListScreen(),
       RouteList.createTodo: (context) => CreateTodoScreen(
             onCreate: (TodoEntity todo) {
               _getTodoBloc..add(AddTodo(todo: todo));
