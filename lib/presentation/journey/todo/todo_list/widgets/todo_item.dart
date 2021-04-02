@@ -1,5 +1,6 @@
-import 'package:clean_code_architecture_flutter/domain/entities/todo_entity.dart';
 import 'package:flutter/material.dart';
+
+import 'package:clean_code_architecture_flutter/domain/entities/todo_entity.dart';
 
 class TodoItem extends StatelessWidget {
   final TodoEntity todo;
@@ -12,6 +13,17 @@ class TodoItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dismissible(
       key: Key(todo.id),
+      direction: DismissDirection.endToStart,
+      background: Container(
+        color: Colors.red,
+        child: Align(
+          alignment: Alignment.centerRight,
+          child: Icon(
+            Icons.delete,
+            color: Colors.white,
+          ),
+        ),
+      ),
       child: ListTile(
         title: Text(
           todo.description,
@@ -31,8 +43,10 @@ class TodoItem extends StatelessWidget {
           ),
         ),
       ),
-      onDismissed: (direction) async {
-        onDelete();
+      onDismissed: (DismissDirection direction) {
+        if (direction == DismissDirection.endToStart) {
+          onDelete();
+        }
       },
     );
   }
