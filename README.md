@@ -62,6 +62,7 @@ The presentation layer interact via domain layer, i.e entities and use cases.
 │   │   ├── http
 │   │   │   └── http_client.dart
 │   │   ├── injector
+│   │   │   ├── injector.dart
 │   │   │   ├── injector_config.dart
 │   │   │   └── injector_config.g.dart
 │   │   └── utils
@@ -79,6 +80,8 @@ The presentation layer interact via domain layer, i.e entities and use cases.
 │   │   │   │   │   └── todo_local_datasource.dart
 │   │   │   │   └── shared_preference
 │   │   │   └── remote
+│   │   │       ├── constants
+│   │   │       │   └── todo_remote_datasource_constants.dart
 │   │   │       └── todo_remote_datasource.dart
 │   │   ├── models
 │   │   │   └── todo_model.dart
@@ -94,6 +97,7 @@ The presentation layer interact via domain layer, i.e entities and use cases.
 │   ├── main.dart
 │   └── presentation
 │       ├── app.dart
+│       ├── common_bloc
 │       ├── journey
 │       │   ├── dashboard
 │       │   │   ├── dashboard_routes.dart
@@ -109,13 +113,15 @@ The presentation layer interact via domain layer, i.e entities and use cases.
 │       │       │   ├── todo_list_screen.dart
 │       │       │   └── widgets
 │       │       │       └── todo_item.dart
-│       │       └── todo_routes.dart
+│       │       ├── todo_routes.dart
+│       │       └── widgets
 │       ├── routes.dart
-│       └── themes
-│           ├── custom_icons.dart
-│           ├── theme_colors.dart
-│           ├── theme_data.dart
-│           └── theme_text.dart
+│       ├── themes
+│       │   ├── custom_icons.dart
+│       │   ├── theme_colors.dart
+│       │   ├── theme_data.dart
+│       │   └── theme_text.dart
+│       └── widgets
 ├── pubspec.lock
 └── pubspec.yaml
 
