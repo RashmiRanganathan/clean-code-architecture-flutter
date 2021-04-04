@@ -15,12 +15,12 @@ class _$InjectorConfig extends InjectorConfig {
   void _configureUsecases() {
     final KiwiContainer container = KiwiContainer();
     container.registerSingleton(
-        (c) => Todousecase(todoRespository: c<TodoRespository>()));
+        (c) => Todousecase(todoRepository: c<TodoRepository>()));
   }
 
   void _configureRepositories() {
     final KiwiContainer container = KiwiContainer();
-    container.registerSingleton<TodoRespository>((c) => TodoRespositoryImpl(
+    container.registerSingleton<TodoRepository>((c) => TodoRepositoryImpl(
         todoRemoteDatasource: c<TodoRemoteDatasource>(),
         todoLocalDatasource: c<TodoLocalDatasource>()));
   }

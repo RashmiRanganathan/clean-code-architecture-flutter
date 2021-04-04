@@ -22,11 +22,11 @@ class TodoModel extends TodoEntity {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> json = {};
-    if (this.completed != null) {
-      json['completed'] = this.completed;
+    if (completed != null) {
+      json['completed'] = completed;
     }
-    if (this.description != null) {
-      json['description'] = this.description;
+    if (description != null) {
+      json['description'] = description;
     }
     return json;
   }

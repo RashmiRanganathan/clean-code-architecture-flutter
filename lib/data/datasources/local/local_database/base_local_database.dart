@@ -44,8 +44,10 @@ abstract class BaseLocalDataSource<TableType, ModelType> {
 
   Future<List<ModelType>> getFormattedData();
 
+  Future<void> insertOrUpdateAll(List<ModelType> todos);
+
   Future<Box<TableType>> _openBox() async {
-    Box<TableType> box = await boxInstance;
+    final Box<TableType> box = await boxInstance;
     if (box == null || !box.isOpen) {
       _init();
       return boxInstance;

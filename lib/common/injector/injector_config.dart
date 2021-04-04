@@ -39,7 +39,7 @@ abstract class InjectorConfig {
   void _configureUsecases();
 
   // ============ REPOSITORIES ============
-  @Register.singleton(TodoRespository, from: TodoRespositoryImpl)
+  @Register.singleton(TodoRepository, from: TodoRepositoryImpl)
   void _configureRepositories();
 
   // ============ REMOTE DATASOURCES ============

@@ -12,13 +12,14 @@ class TodoLocalDatasource extends BaseLocalDataSource<TodoTable, TodoModel> {
   @override
   Future<List<TodoModel>> getFormattedData() async {
     final List<TodoTable> data = await getAll();
-    return data.map((todo) => TodoTable.toModel(todo)).toList();
+    return data.map(TodoTable.toModel).toList();
   }
 
   Future<void> insertOrUpdateItem(TodoModel todo) async {
     await put(todo.id, TodoTable.fromModel(todo));
   }
 
+  @override
   Future<void> insertOrUpdateAll(List<TodoModel> todos) async {
     final Map<String, TodoTable> todoMap = {
       for (var todo in todos) todo.id: TodoTable.fromModel(todo)
