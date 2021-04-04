@@ -25,12 +25,14 @@ class HttpUtil {
     return ExceptionConstants.somethingWentWrong;
   }
 
-  static getResponse(Response response) {
+  static dynamic getResponse(Response response) {
     switch (response.statusCode) {
       case 200:
       case 201:
         final responseJson = json.decode(response.body);
         return responseJson['data'];
+      case 204:
+        return null;
       case 400:
         throw BadRequestException(
           getErroredResult(json.decode(response.body)),

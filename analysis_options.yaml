@@ -1,0 +1,128 @@
+include: package:pedantic/analysis_options.yaml
+
+analyzer:
+  strong-mode:
+    implicit-dynamic: true
+  errors:
+    # allow having TODOs in the code
+    todo: ignore
+    omit_local_variable_types: ignore
+    missing_required_param: error
+    avoid_print: error
+  exclude:
+    # exclude files
+    - lib/common/i18n
+    - "**/*.translations.dart"
+    - lib/common/internationalization.dart
+    - lib/.env.dart
+    - lib/**.g.dart
+    - ablysdk
+    - test_driver/**
+  enable-experiment:
+    - extension-methods
+
+linter:
+  rules:
+    - unnecessary_const
+    - always_declare_return_types
+    - always_put_control_body_on_new_line
+    - always_require_non_null_named_parameters
+    - valid_regexps
+    - void_checks
+    - annotate_overrides
+    - prefer_single_quotes
+    - avoid_as
+    - avoid_empty_else
+    - avoid_print
+    - avoid_field_initializers_in_const_classes
+    - avoid_init_to_null
+    - avoid_null_checks_in_equality_operators
+    - avoid_returning_null
+    - avoid_returning_null_for_void
+    - avoid_return_types_on_setters
+    - avoid_returning_null_for_future
+    - avoid_returning_this
+    - avoid_single_cascade_in_expression_statements
+    - await_only_futures
+    - camel_case_types
+    - avoid_void_async
+    - cascade_invocations
+    - close_sinks
+    - cancel_subscriptions
+    - constant_identifier_names
+    - curly_braces_in_flow_control_structures
+    - directives_ordering
+    - prefer_spread_collections
+    - prefer_constructors_over_static_methods
+    - empty_statements
+    - empty_catches
+    - empty_constructor_bodies
+    - unnecessary_getters_setters
+    - file_names
+    - implementation_imports
+    - invariant_booleans
+    - library_names
+    - library_prefixes
+    - literal_only_boolean_expressions
+    - no_adjacent_strings_in_list
+    - no_duplicate_case_values
+    - null_closures
+    - one_member_abstracts
+    - only_throw_errors
+    - package_names
+    - package_prefixed_library_names
+    - prefer_adjacent_string_concatenation
+    - prefer_asserts_in_initializer_lists
+    - prefer_asserts_with_message
+    - prefer_conditional_assignment
+    - prefer_const_constructors
+    - prefer_const_declarations
+    - prefer_const_literals_to_create_immutables
+    - prefer_contains
+    - prefer_final_fields
+    - prefer_final_in_for_each
+    - prefer_final_locals
+    - prefer_for_elements_to_map_fromIterable
+    - prefer_generic_function_type_aliases
+    - prefer_if_null_operators
+    - prefer_initializing_formals
+    - prefer_inlined_adds
+    - prefer_interpolation_to_compose_strings
+    - prefer_iterable_whereType
+    - prefer_null_aware_operators
+    - prefer_typing_uninitialized_variables
+    - provide_deprecation_message
+    - recursive_getters
+    - slash_for_doc_comments
+    - sort_child_properties_last
+    - sort_pub_dependencies
+    - sort_unnamed_constructors_first
+    - test_types_in_equals
+    - type_annotate_public_apis
+    - type_init_formals
+    - unawaited_futures
+    - unnecessary_await_in_return
+    - unnecessary_brace_in_string_interps
+    - unnecessary_new
+    - unnecessary_null_aware_assignments
+    - unnecessary_null_in_if_null_operators
+    - unnecessary_overrides
+    - unnecessary_parenthesis
+    - unnecessary_this
+    - unrelated_type_equality_checks
+    - unsafe_html
+    - use_full_hex_values_for_flutter_colors
+    - use_rethrow_when_possible
+    - use_setters_to_change_properties
+    - use_string_buffers
+    
+    # nice to have
+    - avoid_double_and_int_checks
+    - avoid_bool_literals_in_conditional_expressions
+    - avoid_function_literals_in_foreach_calls
+    - unnecessary_lambdas
+    - flutter_style_todos
+    - join_return_with_assignment
+    - lines_longer_than_80_chars
+    - prefer_foreach
+    - use_to_and_as_if_applicable

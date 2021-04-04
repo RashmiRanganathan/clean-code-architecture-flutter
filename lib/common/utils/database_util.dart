@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter/material.dart';
 
 class DatabaseUtil {
   static Future<void> initDatabase() async {
@@ -14,7 +15,7 @@ class DatabaseUtil {
     try {
       Hive.registerAdapter(adapter);
     } on HiveError catch (error) {
-      print(error);
+      debugPrint(error.toString());
     }
   }
 }
