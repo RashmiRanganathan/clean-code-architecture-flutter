@@ -26,6 +26,8 @@ class DeleteTodoError extends TodoState {}
 
 class UpdateTodoSuccess extends TodoState {}
 
-class CreatingTodo extends TodoState {}
+class StartCreateTodo extends TodoState {}
 
-class TodoCreated extends TodoState {}
+class CreateTodoSuccess extends TodoState {}
+
+class CreateTodoError extends TodoState {}

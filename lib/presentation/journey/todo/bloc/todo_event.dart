@@ -22,4 +22,4 @@ class CreateNewTodo extends TodoEvent {
   CreateNewTodo({this.todo});
 }
 
-class ReloadNewTodoForm extends TodoEvent {}
+class OpenForm extends TodoEvent {}

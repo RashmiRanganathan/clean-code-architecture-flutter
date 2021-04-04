@@ -29,10 +29,11 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       case CreateNewTodo:
         yield* _createTodo(event);
         break;
-      case ReloadNewTodoForm:
-        yield* _reloadNewTodoForm();
+      case OpenForm:
+        yield* _openForm();
         break;
       default:
+        yield TodoInitial();
         break;
     }
   }
@@ -57,8 +58,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       event.todos
           .removeWhere((TodoModel todoModel) => todoModel.id == event.id);
       await todousecase.deleteTodoById(id: event.id);
-      yield TodoFetchState(
-          todos: Todos(count: event.todos.length, data: event.todos));
+      yield DeleteTodoSuccess();
     } catch (e) {
       print(e);
       yield DeleteTodoError();
@@ -75,12 +75,16 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   }
 
   Stream<TodoState> _createTodo(CreateNewTodo event) async* {
-    yield CreatingTodo();
-    await todousecase.createTodo(event.todo);
-    yield TodoCreated();
+    yield TodoLoadingState();
+    try {
+      await todousecase.createTodo(event.todo);
+      yield CreateTodoSuccess();
+    } catch (e) {
+      yield TodoErrorState();
+    }
   }
 
-  Stream<TodoState> _reloadNewTodoForm() async* {
-    yield TodoInitial();
+  Stream<TodoState> _openForm() async* {
+    yield StartCreateTodo();
   }
 }
