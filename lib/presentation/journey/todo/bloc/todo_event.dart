@@ -1,23 +1,26 @@
+import 'package:flutter/material.dart';
+
 import 'package:clean_code_architecture_flutter/domain/entities/todo_entity.dart';
 
+@immutable
 abstract class TodoEvent {}
 
 class FetchTodos extends TodoEvent {
-  bool fromLocal;
+  final bool fromLocal;
   FetchTodos({this.fromLocal});
 }
 
 class AddTodo extends TodoEvent {
-  TodoEntity todo;
+  final TodoEntity todo;
   AddTodo({this.todo});
 }
 
 class UpdateTodo extends TodoEvent {
-  String id;
+  final String id;
   UpdateTodo({this.id});
 }
 
 class DeleteTodo extends TodoEvent {
-  String id;
+  final String id;
   DeleteTodo({this.id});
 }

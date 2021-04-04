@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:clean_code_architecture_flutter/presentation/journey/todo/todo_list/widgets/todo_list_constants.dart';
 import 'package:clean_code_architecture_flutter/domain/entities/todo_entity.dart';
 import 'package:clean_code_architecture_flutter/presentation/journey/todo/bloc/todo_event.dart';
 import 'package:clean_code_architecture_flutter/presentation/journey/todo/todo_list/widgets/todo_item.dart';
@@ -31,11 +32,12 @@ class _TodoListScreenState extends State<TodoListScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text('TODOS'),
+          title: const Text('TODOS'),
           centerTitle: true,
           actions: [
             IconButton(
-              icon: Icon(Icons.add),
+              key: TodoListConstants.createTodoIcon,
+              icon: const Icon(Icons.add),
               onPressed: () =>
                   Navigator.of(context).pushNamed(RouteList.createTodo),
             )
@@ -57,7 +59,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
         return Stack(
           children: [
             _todoList(todoState.todos ?? []),
-            Center(
+            const Center(
               child: CircularProgressIndicator(
                   backgroundColor: Colors.transparent),
             ),
@@ -65,21 +67,21 @@ class _TodoListScreenState extends State<TodoListScreen> {
         );
         break;
       case LoadedTodos:
-        List<TodoEntity> todos = todoState.todos;
+        final List<TodoEntity> todos = todoState.todos;
         if (todos == null || todos.isEmpty) {
           return Center(
             child: RaisedButton(
               onPressed: () {
                 Navigator.of(context).pushNamed(RouteList.createTodo);
               },
-              child: Text('Add Todo'),
+              child: const Text('Add Todo'),
             ),
           );
         }
         return _todoList(todos);
         break;
       case ErrorTodos:
-        return Center(
+        return const Center(
           child: Text('Errored'),
         );
         break;

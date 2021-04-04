@@ -1,11 +1,12 @@
-import 'package:clean_code_architecture_flutter/common/constants/route_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:clean_code_architecture_flutter/common/constants/route_constants.dart';
+import 'package:clean_code_architecture_flutter/presentation/journey/dashboard/dashboard_constants.dart';
 
 class DashboardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text('TO-DO'),
+          title: const Text('TO-DO'),
           centerTitle: true,
         ),
         body: Center(
@@ -17,6 +18,7 @@ class DashboardScreen extends StatelessWidget {
                 style: Theme.of(context).textTheme.headline3,
               ),
               ElevatedButton(
+                key: const ValueKey(DashboardConstants.elevatedButtonKey),
                 onPressed: () {
                   Navigator.of(context).pushNamed(RouteList.todoList);
                 },

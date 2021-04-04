@@ -17,7 +17,7 @@ class TodoRoutes {
       RouteList.todoList: (context) => TodoListScreen(),
       RouteList.createTodo: (context) => CreateTodoScreen(
             onCreate: (TodoEntity todo) {
-              _getTodoBloc..add(AddTodo(todo: todo));
+              _getTodoBloc.add(AddTodo(todo: todo));
               Navigator.of(context).pop();
             },
           ),

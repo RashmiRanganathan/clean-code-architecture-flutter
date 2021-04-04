@@ -35,7 +35,7 @@ abstract class InjectorConfig {
   void _configureBlocs();
 
   // ============ USECASES ============
-  @Register.singleton(Todousecase)
+  @Register.singleton(TodoUsecase)
   void _configureUsecases();
 
   // ============ REPOSITORIES ============

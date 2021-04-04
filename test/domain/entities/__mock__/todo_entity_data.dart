@@ -5,3 +5,9 @@ TodoEntity todoEntity1 = TodoEntity(
   description: 'create an app',
   completed: false,
 );
+
+TodoEntity todoEntity1Completed = TodoEntity(
+  id: '1',
+  description: 'create an app',
+  completed: true,
+);

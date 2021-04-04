@@ -7,9 +7,9 @@ import 'package:clean_code_architecture_flutter/presentation/journey/todo/bloc/t
 import 'package:clean_code_architecture_flutter/presentation/journey/todo/bloc/todo_state.dart';
 
 class TodoBloc extends Bloc<TodoEvent, TodoState> {
-  final Todousecase todousecase;
+  final TodoUsecase todoUsecase;
 
-  TodoBloc({this.todousecase});
+  TodoBloc({this.todoUsecase});
 
   @override
   TodoState get initialState => InitialTodos();
@@ -34,9 +34,9 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   }
 
   Stream<TodoState> _mapFetchTodoState(FetchTodos event) async* {
-    yield LoadingTodos(todos: this.state.todos);
+    yield LoadingTodos(todos: state.todos);
     try {
-      final todos = await todousecase.getAll(fromLocal: event.fromLocal);
+      final todos = await todoUsecase.getAll(fromLocal: event.fromLocal);
       yield LoadedTodos(todos: todos);
     } catch (e) {
       yield ErrorTodos();
@@ -44,10 +44,10 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   }
 
   Stream<TodoState> _mapAddTodoState(AddTodo event) async* {
-    final todos = this.state.todos;
+    final todos = state.todos;
     yield LoadingTodos(todos: todos);
     try {
-      final updatedTodo = await todousecase.create(event.todo);
+      final updatedTodo = await todoUsecase.create(event.todo);
       todos.add(updatedTodo);
       yield LoadedTodos(todos: todos);
     } catch (e) {
@@ -56,12 +56,12 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   }
 
   Stream<TodoState> _mapUpdateTodoState(UpdateTodo event) async* {
-    final todos = this.state.todos;
+    final todos = state.todos;
     yield LoadingTodos(todos: todos);
     try {
       final todo = todos.singleWhere((TodoEntity todo) => todo.id == event.id);
       todo.completed = !todo.completed;
-      final updatedTodo = await todousecase.update(todo);
+      final updatedTodo = await todoUsecase.update(todo);
       todos[todos.indexWhere((TodoEntity todo) => todo.id == updatedTodo.id)] =
           updatedTodo;
       yield LoadedTodos(todos: todos);
@@ -71,10 +71,10 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   }
 
   Stream<TodoState> _mapDeleteTodoState(DeleteTodo event) async* {
-    final todos = this.state.todos;
+    final todos = state.todos;
     yield LoadingTodos(todos: todos);
     try {
-      await todousecase.delete(event.id);
+      await todoUsecase.delete(event.id);
       todos.removeWhere((TodoEntity todo) => todo.id == event.id);
       yield LoadedTodos(todos: todos);
     } catch (e) {

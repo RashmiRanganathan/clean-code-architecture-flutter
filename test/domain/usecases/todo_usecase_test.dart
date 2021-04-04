@@ -11,14 +11,14 @@ import '../entities/__mock__/todo_entity_data.dart';
 
 void main() {
   TodoRepository todoRepository = MockTodoRepository();
-  Todousecase todousecase;
+  TodoUsecase todoUsecase;
 
   setUp(
     () {
       Injector.container.registerInstance<TodoRepository>(MockTodoRepository());
       todoRepository = Injector.resolve<TodoRepository>();
 
-      todousecase = Todousecase(
+      todoUsecase = TodoUsecase(
         todoRepository: todoRepository,
       );
     },
@@ -36,7 +36,7 @@ void main() {
         when(todoRepository.getAll()).thenAnswer((_) async => [todoEntity1]);
 
         //when
-        final result = await todousecase.getAll();
+        final result = await todoUsecase.getAll();
 
         //then
         expect(result.length, 1);
@@ -49,7 +49,7 @@ void main() {
         when(todoRepository.create(any)).thenAnswer((_) async => todoEntity1);
 
         //when
-        final result = await todousecase.create(todoEntity1);
+        final result = await todoUsecase.create(todoEntity1);
 
         //then
         expect(result.description, todoEntity1.description);
@@ -62,7 +62,7 @@ void main() {
         when(todoRepository.update(any)).thenAnswer((_) async => todoEntity1);
 
         //when
-        final result = await todousecase.update(todoEntity1);
+        final result = await todoUsecase.update(todoEntity1);
 
         //then
         expect(result.completed, todoModel1.completed);
@@ -76,7 +76,7 @@ void main() {
             .thenAnswer((_) async => null);
 
         //when
-        await todousecase.delete(todoEntity1.id);
+        await todoUsecase.delete(todoEntity1.id);
 
         //then
 

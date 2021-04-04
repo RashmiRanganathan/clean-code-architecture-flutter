@@ -9,13 +9,13 @@ part of 'injector_config.dart';
 class _$InjectorConfig extends InjectorConfig {
   void _configureBlocs() {
     final KiwiContainer container = KiwiContainer();
-    container.registerSingleton((c) => TodoBloc(todousecase: c<Todousecase>()));
+    container.registerSingleton((c) => TodoBloc(todoUsecase: c<TodoUsecase>()));
   }
 
   void _configureUsecases() {
     final KiwiContainer container = KiwiContainer();
     container.registerSingleton(
-        (c) => Todousecase(todoRepository: c<TodoRepository>()));
+        (c) => TodoUsecase(todoRepository: c<TodoRepository>()));
   }
 
   void _configureRepositories() {

@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:clean_code_architecture_flutter/domain/entities/todo_entity.dart';
 
+@immutable
 abstract class TodoState {
-  List<TodoEntity> todos;
-  bool loading;
+  final List<TodoEntity> todos;
+  final bool loading;
   TodoState({this.todos, this.loading});
 }
 

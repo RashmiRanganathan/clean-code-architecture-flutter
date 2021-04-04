@@ -12,11 +12,11 @@ class TodoItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key(todo.id),
+      key: ValueKey(todo.id),
       direction: DismissDirection.endToStart,
       background: Container(
         color: Colors.red,
-        child: Align(
+        child: const Align(
           alignment: Alignment.centerRight,
           child: Icon(
             Icons.delete,
@@ -24,6 +24,11 @@ class TodoItem extends StatelessWidget {
           ),
         ),
       ),
+      onDismissed: (DismissDirection direction) {
+        if (direction == DismissDirection.endToStart) {
+          onDelete();
+        }
+      },
       child: ListTile(
         title: Text(
           todo.description,
@@ -35,6 +40,7 @@ class TodoItem extends StatelessWidget {
               : Theme.of(context).textTheme.bodyText1,
         ),
         leading: IconButton(
+          key: ValueKey('${todo.id}_icon'),
           onPressed: onUpdate,
           icon: Icon(
             todo.completed
@@ -43,11 +49,6 @@ class TodoItem extends StatelessWidget {
           ),
         ),
       ),
-      onDismissed: (DismissDirection direction) {
-        if (direction == DismissDirection.endToStart) {
-          onDelete();
-        }
-      },
     );
   }
 }
