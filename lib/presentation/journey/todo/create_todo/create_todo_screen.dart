@@ -77,10 +77,11 @@ class _CreateTodoScreenState extends State<CreateTodoScreen> {
                         Container(
                           padding: EdgeInsets.all(20),
                           decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.green
+                              shape: BoxShape.circle, color: Colors.green),
+                          child: Icon(
+                            Icons.check,
+                            color: Colors.white,
                           ),
-                          child: Icon(Icons.check),
                         ),
                         SizedBox(height: 40),
                         Text("Todo have been created"),
