@@ -28,6 +28,8 @@ class UpdateTodoSuccess extends TodoState {}
 
 class StartCreateTodo extends TodoState {}
 
-class CreateTodoSuccess extends TodoState {}
+class CreateTodoSuccess extends TodoState {
+  CreateTodoSuccess({todos}) : super(todos: todos);
+}
 
 class CreateTodoError extends TodoState {}

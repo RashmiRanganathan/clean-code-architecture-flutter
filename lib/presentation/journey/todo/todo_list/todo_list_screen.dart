@@ -57,6 +57,9 @@ class _TodoListScreenState extends State<TodoListScreen> {
                   Scaffold.of(context).showSnackBar(
                       SnackBar(content: Text("Delete data success")));
                   _todoBloc.add(TodoFetchEvent());
+                } else if (state is CreateTodoSuccess) {
+                  Scaffold.of(context).showSnackBar(
+                      SnackBar(content: Text("Create data success")));
                 }
               },
               builder: (BuildContext context, state) {
@@ -67,6 +70,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                     );
                     break;
                   case TodoFetchState:
+                  case CreateTodoSuccess:
                     return TodoListWidget(
                         state: state,
                         onDismissable: (id) {

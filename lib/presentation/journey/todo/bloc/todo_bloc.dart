@@ -78,7 +78,8 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     yield TodoLoadingState();
     try {
       await todousecase.createTodo(event.todo);
-      yield CreateTodoSuccess();
+      Todos data = await todousecase.getTodos();
+      yield CreateTodoSuccess(todos: data);
     } catch (e) {
       yield TodoErrorState();
     }

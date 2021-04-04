@@ -27,43 +27,38 @@ class _CreateTodoScreenState extends State<CreateTodoScreen> {
 
   @override
   Widget build(BuildContext buildContext) {
-    return WillPopScope(
-      onWillPop: () async {
-        // to handle bloc closed after pop to prev screen
-        Navigator.of(context).pushNamed(RouteList.todoList);
-        // _todoBloc.add(TodoFetchEvent());
-        return true;
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Create Todo'),
-          centerTitle: true,
-        ),
-        body: Center(
-          child: BlocProvider<TodoBloc>(
-            create: (BuildContext context) => _todoBloc,
-            child: BlocBuilder<TodoBloc, TodoState>(
-              builder: (BuildContext context, TodoState todoState) {
-                if (todoState is StartCreateTodo) {
-                  return TodoForm(
-                    saveFunction: (String desc) {
-                      _todoBloc.add(
-                        CreateNewTodo(
-                          todo: TodoEntity(description: desc),
-                        ),
-                      );
-                    },
-                  );
-                } else if (todoState is TodoLoadingState) {
-                  return CircularProgressIndicator();
-                } else if (todoState is CreateTodoSuccess) {
-                  return CreateTodoSucceed(addNewTodo: _addNewTodo);
-                } else if (todoState is TodoErrorState) {
-                  return CreateTodoFailed(addNewTodo: _addNewTodo);
-                }
-                return Container();
-              },
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Create Todo'),
+        centerTitle: true,
+      ),
+      body: Center(
+        child: BlocProvider<TodoBloc>(
+          create: (BuildContext context) => _todoBloc,
+          child: BlocConsumer<TodoBloc, TodoState>(
+            listener: (BuildContext context, TodoState todoState) {
+              if (todoState is CreateTodoSuccess) {
+                Navigator.pop(context);
+              }
+            },
+            builder: (BuildContext context, TodoState todoState) {
+              if (todoState is StartCreateTodo) {
+                return TodoForm(
+                  saveFunction: (String desc) {
+                    _todoBloc.add(
+                      CreateNewTodo(
+                        todo: TodoEntity(description: desc),
+                      ),
+                    );
+                  },
+                );
+              } else if (todoState is TodoLoadingState) {
+                return CircularProgressIndicator();
+              } else if (todoState is TodoErrorState) {
+                return CreateTodoFailed(addNewTodo: _addNewTodo);
+              }
+              return Container();
+            },
           ),
         ),
       ),
@@ -107,42 +102,6 @@ class _TodoFormState extends State<TodoForm> {
             child: Text("Save"),
           )
         ],
-      ),
-    );
-  }
-}
-
-class CreateTodoSucceed extends StatelessWidget {
-  final Function addNewTodo;
-
-  CreateTodoSucceed({this.addNewTodo});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(20),
-      child: Center(
-        child: Column(
-          children: [
-            SizedBox(height: 100),
-            Container(
-              padding: EdgeInsets.all(20),
-              decoration:
-                  BoxDecoration(shape: BoxShape.circle, color: Colors.green),
-              child: Icon(
-                Icons.check,
-                color: Colors.white,
-              ),
-            ),
-            SizedBox(height: 40),
-            Text("Todo have been created"),
-            SizedBox(height: 100),
-            RaisedButton(
-              child: Text("Add new todo"),
-              onPressed: addNewTodo,
-            ),
-          ],
-        ),
       ),
     );
   }
