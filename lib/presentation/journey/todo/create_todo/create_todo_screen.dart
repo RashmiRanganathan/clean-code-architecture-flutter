@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:clean_code_architecture_flutter/domain/entities/todo_entity.dart';
 import 'package:clean_code_architecture_flutter/presentation/journey/todo/create_todo/create_todo_constants.dart';
 
 class CreateTodoScreen extends StatefulWidget {
@@ -48,10 +47,7 @@ class _CreateTodoScreenState extends State<CreateTodoScreen> {
               RaisedButton(
                 key: CreateTodoConstants.createTodoButton,
                 onPressed: () {
-                  final TodoEntity todo = TodoEntity(
-                    description: descriptionController.text,
-                  );
-                  widget.onCreate(todo);
+                  widget.onCreate(descriptionController.text);
                 },
                 child: const Text('Create'),
               )

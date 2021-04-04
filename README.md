@@ -133,3 +133,11 @@ The presentation layer interact via domain layer, i.e entities and use cases.
 
 In case of addition to injector file,
 run `flutter pub run build_runner build --delete-conflicting-outputs`
+
+## How to test
+
+`flutter test --coverage`
+To see percentage
+`lcov -r coverage/lcov.info "*/__test*__/*" -o coverage/lcov_cleaned.info`
+To see coverage of each file in html view
+`genhtml coverage/lcov.info -o coverage`

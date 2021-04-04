@@ -47,7 +47,8 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     final todos = state.todos;
     yield LoadingTodos(todos: todos);
     try {
-      final updatedTodo = await todoUsecase.create(event.todo);
+      final todo = TodoEntity(description: event.description);
+      final updatedTodo = await todoUsecase.create(todo);
       todos.add(updatedTodo);
       yield LoadedTodos(todos: todos);
     } catch (e) {

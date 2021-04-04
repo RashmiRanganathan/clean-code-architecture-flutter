@@ -11,7 +11,7 @@ void main() {
   Function onCreate;
   setUp(() {
     mockObserver = MockNavigatorObserver();
-    onCreate = MockFunction().callbackWithEntity;
+    onCreate = MockFunction().callbackWithString;
   });
 
   testWidgets('Should call oncreate function on tap ',

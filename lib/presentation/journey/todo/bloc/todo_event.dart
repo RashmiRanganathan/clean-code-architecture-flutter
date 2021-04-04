@@ -1,26 +1,37 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-import 'package:clean_code_architecture_flutter/domain/entities/todo_entity.dart';
-
 @immutable
-abstract class TodoEvent {}
+abstract class TodoEvent extends Equatable {}
 
 class FetchTodos extends TodoEvent {
   final bool fromLocal;
   FetchTodos({this.fromLocal});
+
+  @override
+  List<Object> get props => [fromLocal];
 }
 
 class AddTodo extends TodoEvent {
-  final TodoEntity todo;
-  AddTodo({this.todo});
+  final String description;
+  AddTodo({this.description});
+
+  @override
+  List<Object> get props => [description];
 }
 
 class UpdateTodo extends TodoEvent {
   final String id;
   UpdateTodo({this.id});
+
+  @override
+  List<Object> get props => [id];
 }
 
 class DeleteTodo extends TodoEvent {
   final String id;
   DeleteTodo({this.id});
+
+  @override
+  List<Object> get props => [id];
 }

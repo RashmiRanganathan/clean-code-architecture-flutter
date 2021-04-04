@@ -49,7 +49,7 @@ void main() {
     // when
     await tester.pumpWidget(wrapWidgetWithScaffold(
         TodoItem(
-          todo: todoEntity1,
+          todo: todoEntity1..completed = true,
           onUpdate: onUpdate,
           onDelete: onDelete,
         ),

@@ -7,7 +7,8 @@ class TodoItem extends StatelessWidget {
   final Function onUpdate;
   final Function onDelete;
 
-  TodoItem({this.todo, this.onUpdate, this.onDelete});
+  TodoItem({Key key, this.todo, this.onUpdate, this.onDelete})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

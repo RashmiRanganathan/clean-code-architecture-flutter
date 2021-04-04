@@ -53,17 +53,11 @@ class _TodoListScreenState extends State<TodoListScreen> {
 
   Widget _mapStateToWidget(TodoState todoState) {
     switch (todoState.runtimeType) {
-      case InitialTodos:
-        return Container();
       case LoadingTodos:
-        return Stack(
-          children: [
-            _todoList(todoState.todos ?? []),
-            const Center(
-              child: CircularProgressIndicator(
-                  backgroundColor: Colors.transparent),
-            ),
-          ],
+        return const Center(
+          child: CircularProgressIndicator(
+            backgroundColor: Colors.transparent,
+          ),
         );
         break;
       case LoadedTodos:
@@ -71,6 +65,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
         if (todos == null || todos.isEmpty) {
           return Center(
             child: RaisedButton(
+              key: TodoListConstants.createTodoButton,
               onPressed: () {
                 Navigator.of(context).pushNamed(RouteList.createTodo);
               },
@@ -98,6 +93,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
       child: ListView.separated(
         itemCount: todos.length ?? 0,
         itemBuilder: (_, int index) => TodoItem(
+          key: ValueKey('${todos[index].id}_item'),
           todo: todos[index],
           onUpdate: () => todoBloc
             ..add(

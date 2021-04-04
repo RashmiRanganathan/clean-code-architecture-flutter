@@ -6,8 +6,8 @@ TodoEntity todoEntity1 = TodoEntity(
   completed: false,
 );
 
-TodoEntity todoEntity1Completed = TodoEntity(
-  id: '1',
-  description: 'create an app',
-  completed: true,
+TodoEntity todoEntity2 = TodoEntity(
+  id: '2',
+  description: 'Write testcase',
+  completed: false,
 );
