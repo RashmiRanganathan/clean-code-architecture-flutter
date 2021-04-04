@@ -20,7 +20,7 @@ class Todos {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['count'] = this.count;
     if (this.data != null) {
-      data['data'] = this.data.map((todo) => todo.toJson()).toList();
+      data['data'] = this.data.map((todo) => todo.toJson).toList();
     }
     return data;
   }

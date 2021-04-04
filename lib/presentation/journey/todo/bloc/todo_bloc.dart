@@ -1,4 +1,3 @@
-
 import 'package:clean_code_architecture_flutter/data/models/todo_model.dart';
 import 'package:clean_code_architecture_flutter/data/models/todos_model.dart';
 import 'package:clean_code_architecture_flutter/domain/usescases/todo_usecase.dart';
@@ -17,7 +16,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
 
   @override
   Stream<TodoState> mapEventToState(TodoEvent event) async* {
-     switch (event.runtimeType) {
+    switch (event.runtimeType) {
       case TodoFetchEvent:
         yield* _mapTodoFetchEventToState(event);
         break;
@@ -27,13 +26,20 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       case UpdateTodo:
         yield* _mapUpdateToState(event);
         break;
+      case CreateNewTodo:
+        yield* _createTodo(event);
+        break;
+      case OpenForm:
+        yield* _openForm();
+        break;
+      default:
+        yield TodoInitial();
+        break;
     }
   }
 
   @override
   TodoState get initialState => TodoInitial();
-
-  
 
   Stream<TodoState> _mapTodoFetchEventToState(
     TodoFetchEvent event,
@@ -52,7 +58,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
       event.todos
           .removeWhere((TodoModel todoModel) => todoModel.id == event.id);
       await todousecase.deleteTodoById(id: event.id);
-      yield TodoFetchState(todos: Todos(count: event.todos.length, data: event.todos));
+      yield DeleteTodoSuccess();
     } catch (e) {
       print(e);
       yield DeleteTodoError();
@@ -61,10 +67,25 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
 
   Stream<TodoState> _mapUpdateToState(UpdateTodo event) async* {
     try {
-    await todousecase.update(id: event.id, value: event.value);
-     yield UpdateTodoSuccess();
+      await todousecase.update(id: event.id, value: event.value);
+      yield UpdateTodoSuccess();
     } catch (e) {
       yield TodoErrorState();
     }
+  }
+
+  Stream<TodoState> _createTodo(CreateNewTodo event) async* {
+    yield TodoLoadingState();
+    try {
+      await todousecase.createTodo(event.todo);
+      Todos data = await todousecase.getTodos();
+      yield CreateTodoSuccess(todos: data);
+    } catch (e) {
+      yield TodoErrorState();
+    }
+  }
+
+  Stream<TodoState> _openForm() async* {
+    yield StartCreateTodo();
   }
 }

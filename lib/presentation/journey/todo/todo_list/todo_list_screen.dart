@@ -7,7 +7,6 @@ import 'package:clean_code_architecture_flutter/presentation/journey/todo/todo_l
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 import '../bloc/todo_event.dart';
 import '../bloc/todo_state.dart';
 
@@ -54,6 +53,13 @@ class _TodoListScreenState extends State<TodoListScreen> {
                   Scaffold.of(context).showSnackBar(
                       SnackBar(content: Text("Update data success")));
                   _todoBloc.add(TodoFetchEvent());
+                } else if (state is DeleteTodoSuccess) {
+                  Scaffold.of(context).showSnackBar(
+                      SnackBar(content: Text("Delete data success")));
+                  _todoBloc.add(TodoFetchEvent());
+                } else if (state is CreateTodoSuccess) {
+                  Scaffold.of(context).showSnackBar(
+                      SnackBar(content: Text("Create data success")));
                 }
               },
               builder: (BuildContext context, state) {
@@ -64,15 +70,15 @@ class _TodoListScreenState extends State<TodoListScreen> {
                     );
                     break;
                   case TodoFetchState:
+                  case CreateTodoSuccess:
                     return TodoListWidget(
-                      state: state,
-                      onDismissable: (id) {
-                        _todoBloc.add(DeleteTodo(id, state.todos.data));
-                      },
-                      onUpdate: (String id, bool value) {
-                        _todoBloc.add(UpdateTodo(id, value));
-                        }
-                    );
+                        state: state,
+                        onDismissable: (id) {
+                          _todoBloc.add(DeleteTodo(id, state.todos.data));
+                        },
+                        onUpdate: (String id, bool value) {
+                          _todoBloc.add(UpdateTodo(id, value));
+                        });
                     break;
                   default:
                     return ListView.builder(
