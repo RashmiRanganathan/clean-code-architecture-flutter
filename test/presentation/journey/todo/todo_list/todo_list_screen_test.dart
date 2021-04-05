@@ -131,20 +131,6 @@ void main() {
     expect(widget, findsOneWidget);
   });
 
-  // testWidgets('should show loading screen ', (WidgetTester tester) async {
-  //   // when
-  //   when(todoBloc.state).thenAnswer((_) => LoadedTodos(todos: [todoEntity1]));
-  //   await tester.pumpWidget(wrapWidget(
-  //     TodoListScreen(),
-  //     mockObserver,
-  //   ));
-  //   await tester.pumpAndSettle();
-
-  //   final widget = find.byType(CircularProgressIndicator);
-  //   // Then
-  //   expect(widget, findsOneWidget);
-  // });
-  //
   testWidgets('should add delete event', (WidgetTester tester) async {
     // when
     when(todoBloc.state).thenAnswer((_) => LoadedTodos(todos: [todoEntity1]));

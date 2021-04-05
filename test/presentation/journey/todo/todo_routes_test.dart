@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-import 'package:clean_code_architecture_flutter/domain/entities/todo_entity.dart';
 import 'package:clean_code_architecture_flutter/presentation/app.dart';
 import 'package:clean_code_architecture_flutter/presentation/journey/dashboard/dashboard_constants.dart';
 import 'package:clean_code_architecture_flutter/presentation/journey/todo/bloc/todo_event.dart';

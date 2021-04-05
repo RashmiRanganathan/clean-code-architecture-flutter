@@ -15,7 +15,7 @@ abstract class InjectorConfig {
 
   static void setup() {
     container = KiwiContainer();
-    _$InjectorConfig().._configure();
+    _$InjectorConfig()._configure();
   }
 
   // ignore: type_annotate_public_apis

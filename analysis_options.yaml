@@ -11,13 +11,7 @@ analyzer:
     avoid_print: error
   exclude:
     # exclude files
-    - lib/common/i18n
-    - "**/*.translations.dart"
-    - lib/common/internationalization.dart
-    - lib/.env.dart
     - lib/**.g.dart
-    - ablysdk
-    - test_driver/**
   enable-experiment:
     - extension-methods
 

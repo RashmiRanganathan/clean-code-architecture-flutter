@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:clean_code_architecture_flutter/domain/entities/todo_entity.dart';
 import 'package:clean_code_architecture_flutter/common/injector/injector.dart';
 import 'package:clean_code_architecture_flutter/presentation/journey/todo/bloc/todo_bloc.dart';
 import 'package:clean_code_architecture_flutter/presentation/journey/todo/bloc/todo_event.dart';

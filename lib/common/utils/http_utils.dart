@@ -53,17 +53,4 @@ class HttpUtil {
         );
     }
   }
-
-  static dynamic getFileResponse(
-    Response response,
-  ) {
-    switch (response.statusCode) {
-      case 201:
-        return response;
-      case 200:
-        return response;
-      default:
-        getResponse(response);
-    }
-  }
 }

@@ -6,12 +6,15 @@ part 'todo_table.g.dart';
 
 @HiveType(typeId: HiveTypeIdConstants.customerTableId)
 class TodoTable extends TodoModel {
+  @override
   @HiveField(1)
   String id;
 
+  @override
   @HiveField(2)
   String description;
 
+  @override
   @HiveField(3)
   bool completed;
 

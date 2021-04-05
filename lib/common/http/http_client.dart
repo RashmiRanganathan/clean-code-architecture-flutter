@@ -14,34 +14,35 @@ class HttpClient {
 
   HttpClient({
     @required this.host,
+    this.client,
   }) {
-    client = Client();
+    client ??= Client();
   }
 
   factory HttpClient.setTodoAPIhost() => HttpClient(host: Configuration.host);
 
-  Uri getParsedUrl(String path) {
+  Uri _getParsedUrl(String path) {
     return Uri.parse('$host$path');
   }
 
-  Map<String, String> generateAuthorizationHeader() => {
+  Map<String, String> _generateAuthorizationHeader() => {
         HttpConstants.authorization: HttpConstants.authorizationValue,
         HttpConstants.contentType: HttpConstants.jsonContentType
       };
 
-  Map<String, String> generateRequestHeader([
+  Map<String, String> _generateRequestHeader([
     Map<String, String> overrideHeader = const {},
   ]) =>
       {
-        ...generateAuthorizationHeader(),
+        ..._generateAuthorizationHeader(),
         ...overrideHeader,
       };
 
   dynamic get(String path) async {
-    final requestHeader = generateRequestHeader();
+    final requestHeader = _generateRequestHeader();
 
     final Response response = await client.get(
-      getParsedUrl(path),
+      _getParsedUrl(path),
       headers: requestHeader,
     );
 
@@ -50,24 +51,11 @@ class HttpClient {
     );
   }
 
-  Future<Response> downloadFile(String path) async {
-    final requestHeader = generateRequestHeader();
-
-    final Response response = await client.get(
-      getParsedUrl(path),
-      headers: requestHeader,
-    );
-
-    return HttpUtil.getFileResponse(
-      response,
-    );
-  }
-
   dynamic post(String path, dynamic data) async {
-    final requestHeader = generateRequestHeader();
+    final requestHeader = _generateRequestHeader();
 
     final Response response = await client.post(
-      getParsedUrl(path),
+      _getParsedUrl(path),
       body: HttpUtil.encodeRequestBody(
           data, requestHeader[HttpConstants.contentType]),
       headers: requestHeader,
@@ -79,10 +67,10 @@ class HttpClient {
   }
 
   dynamic patch(String path, dynamic data) async {
-    final requestHeader = generateRequestHeader();
+    final requestHeader = _generateRequestHeader();
 
     final Response response = await client.patch(
-      getParsedUrl(path),
+      _getParsedUrl(path),
       body: HttpUtil.encodeRequestBody(
           data, requestHeader[HttpConstants.contentType]),
       headers: requestHeader,
@@ -94,10 +82,10 @@ class HttpClient {
   }
 
   dynamic put(String path, dynamic data) async {
-    final requestHeader = generateRequestHeader();
+    final requestHeader = _generateRequestHeader();
 
     final Response response = await client.put(
-      getParsedUrl(path),
+      _getParsedUrl(path),
       body: json.encode(data),
       headers: requestHeader,
     );
@@ -108,30 +96,14 @@ class HttpClient {
   }
 
   dynamic delete(String path) async {
-    final requestHeader = generateRequestHeader();
+    final requestHeader = _generateRequestHeader();
 
     final Response response = await client.delete(
-      getParsedUrl(path),
+      _getParsedUrl(path),
       headers: requestHeader,
     );
 
     return HttpUtil.getResponse(response);
-  }
-
-  dynamic deleteWithBody(String path, dynamic data) async {
-    final requestHeader = generateRequestHeader();
-
-    final request = Request('DELETE', getParsedUrl(path));
-    requestHeader.forEach((key, value) {
-      request.headers[key] = value;
-    });
-    request.body = jsonEncode(data);
-
-    final response = await client.send(request).then(Response.fromStream);
-
-    return HttpUtil.getResponse(
-      response,
-    );
   }
 
   dynamic getImage(String url) async {

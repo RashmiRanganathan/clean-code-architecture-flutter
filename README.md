@@ -138,6 +138,6 @@ run `flutter pub run build_runner build --delete-conflicting-outputs`
 
 `flutter test --coverage`
 To see percentage
-`lcov -r coverage/lcov.info "*/__test*__/*" -o coverage/lcov_cleaned.info`
+`lcov -r coverage/lcov.info "*/__test*__/*" "*.g.dart" -o coverage/lcov_cleaned.info`
 To see coverage of each file in html view
-`genhtml coverage/lcov.info -o coverage`
+`genhtml coverage/lcov_cleaned.info -o coverage`
